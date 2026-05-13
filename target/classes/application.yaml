@@ -6,6 +6,7 @@ spring:
   ai:
     mcp:
       server:
-        # SSE (HTTP) transport is required for Docker / Render.com deployments.
-        # The default STDIO transport only works for local process communication.
+        enabled: true
+        name: devplay-2026-mcp-server
+        version: 1.0.0
         transport: SSE
