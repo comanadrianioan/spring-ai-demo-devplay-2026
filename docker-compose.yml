@@ -1,0 +1,77 @@
+services:
+  chroma:
+    image: chromadb/chroma:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma-data:/chroma/chroma
+    healthcheck:
+      test: [ "CMD", "bash", "-c", "echo > /dev/tcp/localhost/8000" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  devplay-info-mcp:
+    build:
+      context: .
+      dockerfile: devplay-info-mcp/Dockerfile
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "-O-", "http://localhost:8080/actuator/health" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  rag-search-mcp:
+    build:
+      context: .
+      dockerfile: rag-search-mcp/Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      - OPENAI_API_KEY
+      - CHROMA_HOST=http://chroma
+    depends_on:
+      chroma:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "-O-", "http://localhost:8081/actuator/health" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  chat-history-mcp:
+    build:
+      context: .
+      dockerfile: chat-history-mcp/Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      - OPENAI_API_KEY
+      - CHROMA_HOST=http://chroma
+    depends_on:
+      chroma:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "-O-", "http://localhost:8082/actuator/health" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  web-search-mcp:
+    build:
+      context: .
+      dockerfile: web-search-mcp/Dockerfile
+    ports:
+      - "8083:8083"
+    environment:
+      - TAVILY_API_KEY
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "-O-", "http://localhost:8083/actuator/health" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  chroma-data: {}

@@ -1,0 +1,29 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: chat-history-mcp
+  ai:
+    mcp:
+      server:
+        enabled: true
+        name: chat-history-mcp
+        version: 1.0.0
+        transport: SSE
+    vectorstore:
+      chroma:
+        client:
+          host: ${CHROMA_HOST:http://localhost}
+          port: 8000
+        collection-name: chat_history
+        initialize-schema: true
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      embedding:
+        options:
+          model: text-embedding-3-small
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

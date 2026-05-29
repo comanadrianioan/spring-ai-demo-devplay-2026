@@ -1,0 +1,21 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: web-search-mcp
+  ai:
+    mcp:
+      server:
+        enabled: true
+        name: web-search-mcp
+        version: 1.0.0
+        transport: SSE
+tavily:
+  api-key: ${TAVILY_API_KEY}
+  base-url: https://api.tavily.com
+  timeout-seconds: 10
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
