@@ -1,3 +1,91 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project overview
+
+Multi-module Maven monorepo of four Spring AI MCP servers for the Dev.Play 2026 conference demo. Each module is an independent Spring Boot application exposing tools over SSE transport.
+
+| Module | Port | MCP tools |
+| --- | --- | --- |
+| `devplay-info-mcp` | 8080 | `DevPlayInformations` (static text) |
+| `rag-search-mcp` | 8081 | `searchWiki` (Chroma vector search) |
+| `chat-history-mcp` | 8082 | `searchChatHistory`, `recordChatHistory` (Chroma semantic cache) |
+| `web-search-mcp` | 8083 | `searchWeb` (Tavily REST API) |
+
+`common/` is a library JAR (no main class) shared by `rag-search-mcp` and `chat-history-mcp` for OpenAI embeddings + Chroma configuration. `web-search-mcp` and `devplay-info-mcp` do not depend on it.
+
+## Prerequisites
+
+- Java 24
+- `OPENAI_API_KEY` — used by `rag-search-mcp` and `chat-history-mcp`
+- `TAVILY_API_KEY` — used by `web-search-mcp`
+- Copy `.env.example` → `.env` and fill in keys before running with Docker Compose
+
+## Commands
+
+```bash
+# Build and run all tests
+./mvnw verify
+
+# Run a single module locally (Chroma must be running for rag-search-mcp and chat-history-mcp)
+./mvnw spring-boot:run -pl rag-search-mcp
+
+# Start Chroma standalone (needed for local runs of rag-search-mcp and chat-history-mcp)
+docker compose up -d chroma
+
+# Run tests for a single module
+./mvnw test -pl rag-search-mcp
+
+# Full stack via Docker Compose
+docker compose up --build
+```
+
+## Connecting n8n to the MCP Docker network
+
+n8n runs in a separate Docker Compose project (`self-hosted-ai-starter-kit`) and must be manually joined to this project's network so it can reach the MCP servers by service name.
+
+```bash
+# One-time setup — run after starting both stacks
+docker network connect spring-ai-demo-devplay-2026_default n8n
+```
+
+Once connected, configure each MCP Client Tool node in n8n with:
+
+| MCP Server | Endpoint URL |
+| --- | --- |
+| devplay-info-mcp | `http://devplay-info-mcp:8080/sse` |
+| rag-search-mcp | `http://rag-search-mcp:8081/sse` |
+| chat-history-mcp | `http://chat-history-mcp:8082/sse` |
+| web-search-mcp | `http://web-search-mcp:8083/sse` |
+
+Use **Server Transport: Server Sent Events (Deprecated)**. The servers use Spring AI's SSE transport (`2024-11-05` protocol); n8n's MCP SDK sends `2025-06-18` but the server gracefully downgrades. **Save the workflow after changing any URL** — n8n's test runs from the saved state, not the current UI.
+
+## Architecture
+
+### MCP tool registration pattern
+
+Every server registers its tools the same way: a `@Configuration` class creates a `List<ToolCallback>` bean by calling `ToolCallbacks.from(toolsBean)`. Spring AI MCP autoconfiguration picks up that bean and exposes the tools over SSE. The `@Tool`-annotated methods on the tools bean define the tool name and description.
+
+### RAG ingest (rag-search-mcp)
+
+`WikiIngestor` implements `ApplicationRunner` and runs at startup. It reads all files under `src/main/resources/wiki/`, chunks them with `TokenTextSplitter`, and writes to Chroma with deterministic IDs derived from `SHA-256(file bytes)[0:16]-<chunkIndex>`. `ChunkExistenceCheck` (implemented by `ChromaChunkExistenceCheck`) gates each file so already-ingested content is skipped — embeddings are not re-billed on restart. To add wiki content, drop files into `rag-search-mcp/src/main/resources/wiki/`.
+
+### Vector store collections
+
+- `wiki` — `rag-search-mcp` (documents + metadata: source, score)
+- `chat_history` — `chat-history-mcp` (question text as document, answer + timestamp in metadata)
+
+Both use OpenAI `text-embedding-3-small` via the `common` module's autoconfiguration.
+
+### Web search
+
+`TavilyClient` (in `web-search-mcp`) uses `RestTemplate` to POST to the Tavily API. On HTTP 5xx it retries once; any failure surfaces as an MCP tool error.
+
+### Testing approach
+
+Unit tests only (Mockito + AssertJ, no Testcontainers). External services (OpenAI, Tavily, Chroma) are mocked. Integration tests and end-to-end tests across servers are out of scope.
+
 <!-- rtk-instructions v2 -->
 # RTK (Rust Token Killer) - Token-Optimized Commands
 

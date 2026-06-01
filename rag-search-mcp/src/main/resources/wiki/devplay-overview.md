@@ -1,19 +1,45 @@
-# Dev.Play Conference 2026
+# Dev.Play 2026
 
-Dev.Play is a two-day game development conference held in downtown Bucharest, Romania.
+Dev.Play is the first Romanian conference on game development, organised by the Romanian Game Developers Association (RGDA). The 2026 edition takes place on **June 8–9, 2026** in **Bucharest, Romania**.
 
-## What to Expect
+## Key Facts
 
-- **Fresh & Focused Track**: Specialised content tracks including External Development, Indie Game Development, AAA Development, Mobile Games, and Fundraising.
-- **Networking**: Up to 500 attendees with professional matchmaking tools and targeted business opportunities. Meet studios, publishers, investors, and service providers from around the world.
-- **Indie Festival & Expo**: Creative indie games from the region in an on-site and live-streamed Indie Showcase, with dev interviews, exclusive gameplay, and a dedicated Steam sale page.
-- **Exclusive Events**: The official Dev.Play party and VIP side events.
-- **World-Class Speakers**: Studio founders, tech innovators, creative directors, and investors sharing insights and actionable advice.
+- **Dates**: June 8–9, 2026
+- **Location**: Bucharest, Romania
+- **Attendees**: Up to 500 professionals
+- **Speakers**: ~70 industry experts
+- **Format**: In-person + live-streamed (hybrid)
+
+## Tracks
+
+- **External Development** — outsourcing strategies, co-dev partnerships, vendor management
+- **Indie Game Development** — from prototype to launch, funding, visibility
+- **AAA Development** — pipeline tooling, team scaling, cross-studio collaboration
+- **Mobile Games** — monetisation, user acquisition, platform trends
+- **Fundraising** — grants, publishers, venture capital for game studios
 
 ## Who Attends
 
-Game developers, studio founders, publishers, investors, and service providers from Romania and internationally.
+Game developers, studio founders, publishers, investors, service providers, and recruiters from Romania and internationally. The 2026 edition has a special focus on education, bringing universities that offer game development programs together with the industry.
 
-## Location
+## Indie Festival & Expo
 
-Downtown Bucharest, Romania.
+An on-site and live-streamed Indie Showcase featuring creative indie games from the region. Includes developer interviews, exclusive gameplay demos, and a dedicated Steam sale page. Indie Showcase applications closed March 2026.
+
+## Special Events
+
+- Official Dev.Play Party (evening of Day 1)
+- VIP side events and publisher speed-dating
+- Investor pitch sessions
+- Awards Ceremony (closing Day 2)
+
+## Tickets
+
+- Early Bird tickets available
+- RGDA members: 20% discount
+- Startups and solo developers with one released game: 30% discount
+- Student discounts available
+
+## Website
+
+https://dev-play.ro
