@@ -24,9 +24,9 @@ public class RagSearchTools {
 
     @Tool(name = "searchWiki",
           description = "Search the DevPlay knowledge base using semantic similarity. Returns relevant text chunks.")
-    public String searchWiki(String query, int topK) {
+    public String searchWiki(String query) {
         List<Document> results = vectorStore.similaritySearch(
-            SearchRequest.builder().query(query).topK(topK).build()
+            SearchRequest.builder().query(query).topK(5).build()
         );
         List<Map<String, Object>> mapped = results.stream()
             .map(d -> Map.of(
