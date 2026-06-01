@@ -1,0 +1,29 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: rag-search-mcp
+  ai:
+    mcp:
+      server:
+        enabled: true
+        name: rag-search-mcp
+        version: 1.0.0
+        transport: SSE
+    vectorstore:
+      chroma:
+        client:
+          host: ${CHROMA_HOST:http://localhost}
+          port: 8000
+        collection-name: wiki
+        initialize-schema: true
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      embedding:
+        options:
+          model: text-embedding-3-small
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
