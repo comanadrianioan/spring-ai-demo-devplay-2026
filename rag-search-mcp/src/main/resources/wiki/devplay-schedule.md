@@ -1,29 +1,30 @@
 # Dev.Play 2026 Schedule
 
-Dev.Play runs for two full days with multiple concurrent tracks.
+## Day 1 — June 8, 2026
 
-## Day 1
+| Time | Room A (Main Stage) | Room B (External Dev) | Room C (Indie) |
+|------|--------------------|-----------------------|----------------|
+| 09:00 | Registration & Coffee | | |
+| 10:00 | **Opening Keynote** — The State of Game Development in 2026 | | |
+| 11:00 | **Outsourcing at Scale** — Phil Knowles, Amazon Games | **Fail Fast, Play Faster** — Prototyping Workshop | |
+| 12:00 | **Co-Dev Pipelines That Actually Work** — Maria Ionescu, Amber Studio | **From Jam to Steam** — indie launch war stories | |
+| 13:00 | Networking Lunch | | |
+| 14:00 | **Localisation & Cultural Sensitivity** — Kate Edwards, Geogrify | **Publisher Speed-Dating** (by invitation) | **Indie Dev Clinic** (open mentoring) |
+| 15:00 | **Cinematic Storytelling in AAA** — Philip Martin, Hazelight | **Contracts & IP: What Every Dev Should Know** | **Funding Your First Game** |
+| 16:00 | **AI in Game Development — Magic Wand or Poisoned Gift?** | **QA Outsourcing Best Practices** | **Wishlist Growth Tactics** |
+| 17:00 | Panel: **The Future of Co-Development** | | |
+| 19:00 | 🎉 Official Dev.Play Party | | |
 
-- Opening Keynote: The State of Game Development in 2026
-- Track A — External Development: Outsourcing strategies and partnerships
-- Track B — Indie Development: From prototype to launch
-- Track C — AAA Development: Pipeline tooling at scale
-- Networking Lunch
-- Afternoon Sessions: Publisher speed-dating, investor pitches
-- Evening: Official Dev.Play Party
+## Day 2 — June 9, 2026
 
-## Day 2
-
-- Morning Keynote: Emerging markets and new platforms
-- Track A — Mobile Games: Monetisation and UA strategies
-- Track B — Fundraising: Grants, publishers, and venture capital
-- Indie Showcase: Live-streamed gameplay with developer interviews
-- Closing Panel: The future of the Romanian game dev ecosystem
-- Awards Ceremony
-
-## Key Information
-
-- Registration opens January 2026.
-- Student discounts available.
-- Indie Showcase applications close March 2026.
-- All sessions will be recorded and available post-event.
+| Time | Room A (Main Stage) | Room B (Mobile & Fundraising) | Room C (AAA) |
+|------|--------------------|-----------------------------|--------------|
+| 09:30 | **Morning Keynote** — Emerging Markets and New Platforms | | |
+| 10:30 | **Monetisation Without Alienating Players** — Mobile track | **Tech Workshop: Future of Software Architecture in the Age of AI** | |
+| 11:30 | **User Acquisition in 2026: What Still Works** | **Grants & Public Funding for Game Studios** | **Rendering at Scale — GPU budgets in open worlds** |
+| 12:30 | Networking Lunch | | |
+| 13:30 | **VC Perspectives on the Games Market** — investor panel | **Persona-Based Testing Workshop** | **Crunch is a Design Problem** |
+| 14:30 | **Indie Showcase** — live-streamed gameplay + dev interviews | | **Tools That Ship: CI/CD for Game Studios** |
+| 15:30 | **Universities Meet Industry** — roundtable | **Mobile Live Ops: Keeping Players Coming Back** | |
+| 16:30 | Closing Panel: **The Future of the Romanian Game Dev Ecosystem** | | |
+| 17:30 | 🏆 Awards Ceremony | | |
