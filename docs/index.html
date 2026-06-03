@@ -492,12 +492,31 @@
       border: 1px solid var(--border);
     }
 
-    .diagram-wrap img {
+    .diagram-wrap img,
+    .diagram-wrap > svg {
       display: block;
       width: 100%;
       height: auto;
       max-height: 620px;
       object-fit: contain;
+    }
+
+    /* Flowing "stream" connectors — dashes scroll from agent toward each tool */
+    @keyframes mcp-stream {
+      to {
+        stroke-dashoffset: -14;
+      }
+    }
+
+    .mcp-flow {
+      stroke-dasharray: 9 5;
+      animation: mcp-stream 0.6s linear infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mcp-flow {
+        animation: none;
+      }
     }
 
     .slide-diagram .diagram-wrap {
@@ -737,9 +756,7 @@
           <span><span class="accent">Adrian</span> Coman</span>
         </p>
         <aside class="notes">
-          Welcome everyone. AI shows up in almost every product pitch and everyday conversation—we have seen something
-          like a five-hundred percent spike in search interest over the last couple of years alone. Today we want to
-          connect that hype to how we actually design software, especially as we move into the agent era.
+          Welcome everyone. AI shows up in almost every product pitch and everyday conversation—we have seen something like a five-hundred percent spike in search interest over the last couple of years alone. Today we want to connect that hype to how we actually design software, especially as we move into the agent era.
         </aside>
       </section>
 
@@ -753,11 +770,7 @@
           <div class="yr hl"><span>2026</span>Agents ship for real</div>
         </div>
         <aside class="notes">
-          It is fair to ask whether AI is here to stay or just another hype cycle. Instead of starting in the nineties,
-          look at the last three years. In twenty-twenty-three, copilots landed in every IDE. In twenty-twenty-four,
-          teams wired RAG and tools into real services. In twenty-twenty-five, orchestration patterns matured.
-          Twenty-twenty-six is when many of us stop experimenting and start shipping agents—with planning, decisions,
-          and actions inside our architectures. Models got smarter; systems got agentic.
+          It is fair to ask whether AI is here to stay or just another hype cycle. Instead of starting in the nineties, look at the last three years. In twenty-twenty-three, copilots landed in every IDE. In twenty-twenty-four, teams wired RAG and tools into real services. In twenty-twenty-five, orchestration patterns matured. Twenty-twenty-six is when many of us stop experimenting and start shipping agents—with planning, decisions, and actions inside our architectures. Models got smarter; systems got agentic.
         </aside>
       </section>
 
@@ -770,9 +783,7 @@
           </div>
         </div>
         <aside class="notes">
-          I am Razvan. I have spent about eight years in software, mostly Java, from writing features through deployment
-          and infrastructure to architecture. I will walk you through a real-world scenario and how we evolved a
-          chatbot-style solution toward something more production-ready.
+          I am Razvan. I have spent about eight years in software, mostly Java, from writing features through deployment and infrastructure to architecture. I will walk you through a real-world scenario and how we evolved a chatbot-style solution toward something more production-ready.
         </aside>
       </section>
 
@@ -785,9 +796,7 @@
           </div>
         </div>
         <aside class="notes">
-          I am Adrian. I have nine years of Java experience across several industries, with a focus on design and
-          architecture. I will cover what agents are, why our architectures need to change, and how RAG fits in before
-          we dive into the scenarios.
+          I am Adrian. I have around 10 years experience across several industries, with a focus on design and architecture. Currently I'm part of GenAI team @Crowdstrike where I'm building scalable solutions with and for AI. But enough about be me, let's dive right in.
         </aside>
       </section>
 
@@ -809,11 +818,13 @@
         </div>
 
         <aside class="notes">
-          In simple terms, an AI agent is a system that acts on its own to achieve a goal. Unlike a chatbot that only
-          answers once, an agent can plan tasks, make decisions, and take actions over time. Think of giving the AI a
-          mission—it figures out the steps and can adjust along the way. Instead of only asking what the weather is, you
-          might ask it to plan a weekend trip, suggest hotels, and remind you to pack—and it tries to carry that
-          through.
+          Any ideas...? In simple words, An AI Agent is a system that can act on its own to achieve a goal.
+
+          Unlike a regular chatbot that just answers questions, an AI Agent can: - Plan tasks - Make decisions - Take actions and it can Work over time, not just respond once
+
+          Think of it like giving the AI a mission—and it figures out how to complete it, step by step, sometimes even adjusting along the way.
+
+          For example: Instead of just asking, "What's the weather?", you could tell an AI Agent:"Plan a weekend trip based on good weather, book a hotel, and remind me to pack."And it would try to do it all for you.
         </aside>
       </section>
 
@@ -863,23 +874,17 @@
           actually act.
         </p>
         <aside class="notes">
-          The AI engineering role has shifted three times in four years, and each shift moved the optimization target.
+          The last few years of AI come down to one shift: we went from writing prompts to building a harness. Let me walk you through how we got here.
 
-          In twenty-twenty-two and twenty-twenty-three, the question was: how do I ask the model? That was prompt
-          engineering — roles, examples, reasoning patterns. A small prompt change could dramatically improve results,
-          so we optimized instructions.
+          It started with prompts. The idea was simple — ask better, get better. We tuned our words: roles, examples, instructions. For a while, that was the whole game.
 
-          By twenty-twenty-four, teams realized most failures came from missing context, not bad prompts. The question
-          became: what information should the model have? RAG, memory, conversation history, tool outputs — we optimized
-          information.
+          Then we learned the words weren't enough. The model needed the right information in front of it. The focus moved to context — memory, history, documents, data. Feed it well, and it answers well.
 
-          Now, in twenty-twenty-five and twenty-twenty-six, the model itself is just one component. The question is:
-          how do I organize the entire system around the model? Agent orchestration, tool calling, memory management,
-          evaluation loops. We optimize the execution environment.
+          But even a smart model with good context has one limit: it can only talk. It can't act, check its work, or fix its own mistakes. That's the wall we hit — and that's why we're here now, at Harness Engineering.
 
-          As models improved, the bottleneck moved — from prompt quality, to context quality, to system design. That is
-          the harness. And an AI Agent is simply a Model plus a Harness. Watch for that pattern in every architecture
-          iteration we walk through — each one is really a more capable harness around the same LLM.
+          This is the key idea. An agent is not just a model. An agent is a model plus a harness. The model is the brain — it thinks. The harness is everything around it that lets it act: tools, memory, loops, permissions, checks, retries. Think of a car. The model is the engine; the harness is the rest of the vehicle — wheels, brakes, steering. A great engine on the ground goes nowhere. What gets you somewhere is the whole car working together.
+
+          So here's the takeaway. The best model alone won't win, models are starting to look alike anyway. The real difference now is the harness around them. The next wave of AI won't be about which model you pick. It'll be about how well you build the harness.
         </aside>
       </section>
 
@@ -896,24 +901,109 @@
           </div>
         </div>
         <aside class="notes">
-          Agents are getting smart enough for production, and expectations are rising. Why now? Because the amount of
-          data we process is huge—traditional software cannot keep up, while AI can learn and adapt. How do we use it?
-          By integrating large language models into our applications so they understand what users mean and help produce
-          clear, useful responses quickly.
+          AI agents are getting smarter and more useful, and everyone expects they’ll soon be used in production.
+
+          WHY: One big reason for this shift is the huge amount of data we deal with today. Traditional software can’t keep up, but AI can learn and adapt, making it a much better tool for the job.
+
+          HOW: The key to making this work is adding LLMs into our software. LLMs can understand what you mean and help create clear, useful text quickly
         </aside>
       </section>
 
-      <section class="slide-diagram">
+      <section class="slide-diagram" data-step-slide="rag">
         <h2><span class="accent">R</span>etrieval‑<span class="accent">A</span>ugmented <span
             class="accent">G</span>eneration</h2>
         <div class="diagram-wrap">
-          <img src="presentation/diagram-rag.svg" alt="">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1490 500" font-family="Inter, -apple-system, system-ui, sans-serif">
+            <defs>
+              <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="3" stdDeviation="5" flood-opacity="0.1"/>
+              </filter>
+              <linearGradient id="grad-purple" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#a78bfa"/>
+                <stop offset="100%" stop-color="#7c3aed"/>
+              </linearGradient>
+              <linearGradient id="grad-green" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#4ade80"/>
+                <stop offset="100%" stop-color="#16a34a"/>
+              </linearGradient>
+              <linearGradient id="grad-blue" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#3b82f6"/>
+                <stop offset="100%" stop-color="#2563eb"/>
+              </linearGradient>
+              <linearGradient id="grad-teal" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#2dd4bf"/>
+                <stop offset="100%" stop-color="#0d9488"/>
+              </linearGradient>
+            </defs>
+
+            <!-- ══════════════ STEP 1: QUERY ══════════════ -->
+            <g data-step-order="0">
+              <g filter="url(#shadow)">
+                <rect x="40" y="60" width="300" height="380" rx="18" fill="#faf5ff" stroke="#7c3aed" stroke-width="2.5"/>
+              </g>
+              <circle cx="190" cy="170" r="60" fill="url(#grad-purple)"/>
+              <text x="190" y="190" text-anchor="middle" font-size="52" font-weight="800" fill="#fff">1</text>
+              <text x="190" y="295" text-anchor="middle" font-size="30" font-weight="800" fill="#4c1d95">Query</text>
+              <text x="190" y="345" text-anchor="middle" font-size="17" fill="#6d28d9">User asks a</text>
+              <text x="190" y="370" text-anchor="middle" font-size="17" fill="#6d28d9">question</text>
+            </g>
+
+            <!-- ══════════════ STEP 2: RETRIEVE (+ arrow 1→2) ══════════════ -->
+            <g data-step-order="1">
+              <!-- Arrow 1 → 2 -->
+              <path d="M350,246 L384,246 L384,240 L402,250 L384,260 L384,254 L350,254 Z" fill="#64748b"/>
+              <text x="376" y="232" text-anchor="middle" font-size="13" font-style="italic" fill="#94a3b8">question</text>
+              <g filter="url(#shadow)">
+                <rect x="410" y="60" width="300" height="380" rx="18" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+              </g>
+              <circle cx="560" cy="170" r="60" fill="url(#grad-green)"/>
+              <text x="560" y="190" text-anchor="middle" font-size="52" font-weight="800" fill="#fff">2</text>
+              <text x="560" y="295" text-anchor="middle" font-size="30" font-weight="800" fill="#14532d">Retrieve</text>
+              <text x="560" y="345" text-anchor="middle" font-size="17" fill="#15803d">Find relevant docs</text>
+              <text x="560" y="370" text-anchor="middle" font-size="17" fill="#15803d">via vector search</text>
+            </g>
+
+            <!-- ══════════════ STEP 3: AUGMENT (+ arrow 2→3) ══════════════ -->
+            <g data-step-order="2">
+              <!-- Arrow 2 → 3 -->
+              <path d="M720,246 L754,246 L754,240 L772,250 L754,260 L754,254 L720,254 Z" fill="#64748b"/>
+              <text x="746" y="232" text-anchor="middle" font-size="13" font-style="italic" fill="#94a3b8">context</text>
+              <g filter="url(#shadow)">
+                <rect x="780" y="60" width="300" height="380" rx="18" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+              </g>
+              <circle cx="930" cy="170" r="60" fill="url(#grad-blue)"/>
+              <text x="930" y="190" text-anchor="middle" font-size="52" font-weight="800" fill="#fff">3</text>
+              <text x="930" y="295" text-anchor="middle" font-size="30" font-weight="800" fill="#1e40af">Augment</text>
+              <text x="930" y="345" text-anchor="middle" font-size="17" fill="#1d4ed8">Combine query with</text>
+              <text x="930" y="370" text-anchor="middle" font-size="17" fill="#1d4ed8">retrieved context</text>
+            </g>
+
+            <!-- ══════════════ STEP 4: GENERATE (+ arrow 3→4) ══════════════ -->
+            <g data-step-order="3">
+              <!-- Arrow 3 → 4 -->
+              <path d="M1090,246 L1124,246 L1124,240 L1142,250 L1124,260 L1124,254 L1090,254 Z" fill="#64748b"/>
+              <text x="1116" y="232" text-anchor="middle" font-size="13" font-style="italic" fill="#94a3b8">prompt</text>
+              <g filter="url(#shadow)">
+                <rect x="1150" y="60" width="300" height="380" rx="18" fill="#f0fdfa" stroke="#0d9488" stroke-width="2.5"/>
+              </g>
+              <circle cx="1300" cy="170" r="60" fill="url(#grad-teal)"/>
+              <text x="1300" y="190" text-anchor="middle" font-size="52" font-weight="800" fill="#fff">4</text>
+              <text x="1300" y="295" text-anchor="middle" font-size="30" font-weight="800" fill="#134e4a">Generate</text>
+              <text x="1300" y="345" text-anchor="middle" font-size="17" fill="#0f766e">LLM produces a</text>
+              <text x="1300" y="370" text-anchor="middle" font-size="17" fill="#0f766e">grounded answer</text>
+            </g>
+          </svg>
         </div>
         <aside class="notes">
-          To face those challenges we often use RAG—retrieval augmented generation. RAG connects the LLM to a library of
-          knowledge. When someone asks a question, we search that library first, then feed the relevant facts to the
-          model together with the question. That way the answer is grounded in data you control. This diagram is the
-          prompt cycle: retrieve, augment the prompt, then generate—not sending the question to the model in isolation.
+          Imagine an AI companion inside a Mario game. A player can ask it anything in plain words. The catch: a raw LLM has never played your version of the game. Ask it "where's the hidden star in this level?" and it'll either shrug or confidently make one up. RAG fixes that by grounding the model in the game's own knowledge. Four steps.
+
+          Query — The player asks a real question: "How do I beat Bowser in the final castle?" Natural language, just like talking to a friend.
+
+          Augment — Now we build the real prompt. We take the player's question and attach those retrieved passages — Bowser's attack patterns, the bridge mechanic, the timing — straight into the context. The model isn't guessing from memory anymore; it has the game's actual content in hand.
+
+          Generate — The LLM writes the answer, grounded in that context: "Dodge his fire breath, grab his tail when he charges, spin to build momentum, and fling him into the bombs behind him — three times to win." Accurate, on-game, and updatable just by editing a doc — no retraining.
+
+          The shift in one line: we stop asking the model "what do you know about Mario?" and start telling it "here's the relevant strategy — now answer the player." That's what turns an in-game AI from a liability into something you can trust.
         </aside>
       </section>
 
@@ -925,23 +1015,174 @@
           <div class="chip" data-step-order="2">Lower cost when designed with guardrails</div>
         </div>
         <aside class="notes">
-          Grounding the model on real data cuts down hallucinations. You can refresh the knowledge base without
-          retraining the entire model. Done right, with proper guards against abuse, it can also be cheaper. Now that we
-          have the basics of LLMs and RAG, Razvan will take you through a real-world scenario we keep running into.
+          More relevant, factual outputs — Answers come from your data, not the model's guesswork. Fewer hallucinations.
+
+          Update knowledge without retraining — New info? Just edit a doc. The model stays the same.
+
+          Lower cost with guardrails — No expensive fine-tuning, and you control what it can say.
         </aside>
       </section>
 
-      <section class="slide-diagram">
+      <section class="slide-diagram" data-step-slide="mcp">
         <h2><span class="accent">MCP</span> — Model Context Protocol</h2>
         <div class="diagram-wrap">
-          <img src="presentation/diagram-mcp-compare.svg" alt="">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 50 1400 670" font-family="Inter, -apple-system, system-ui, sans-serif">
+            <defs>
+              <filter id="mcp-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="3" stdDeviation="5" flood-opacity="0.1"/>
+              </filter>
+              <linearGradient id="mcp-grad-blue" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#3b82f6"/>
+                <stop offset="100%" stop-color="#2563eb"/>
+              </linearGradient>
+              <marker id="arr-orange" markerWidth="18" markerHeight="14" refX="17" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+                <path d="M0,0 L18,7 L0,14 Z" fill="#ea580c"/>
+              </marker>
+              <marker id="arr-green" markerWidth="18" markerHeight="14" refX="17" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+                <path d="M0,0 L18,7 L0,14 Z" fill="#16a34a"/>
+              </marker>
+              <marker id="arr-pink" markerWidth="18" markerHeight="14" refX="17" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+                <path d="M0,0 L18,7 L0,14 Z" fill="#db2777"/>
+              </marker>
+              <marker id="arr-cyan" markerWidth="18" markerHeight="14" refX="17" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+                <path d="M0,0 L18,7 L0,14 Z" fill="#0891b2"/>
+              </marker>
+              <marker id="arr-purple" markerWidth="18" markerHeight="14" refX="17" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+                <path d="M0,0 L18,7 L0,14 Z" fill="#7c3aed"/>
+              </marker>
+            </defs>
+
+            <!-- ══════════════ ALWAYS VISIBLE: subtitle + divider ══════════════ -->
+            <text x="700" y="80" text-anchor="middle" font-size="14" fill="#64748b">From bespoke integrations to a universal connector</text>
+            <line x1="700" y1="100" x2="700" y2="668" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4 6"/>
+
+            <!-- ══════════════ STEP 0: WITHOUT MCP — agent + tools ══════════════ -->
+            <g data-step-order="0">
+              <text x="350" y="128" text-anchor="middle" font-size="24" font-weight="800" fill="#dc2626" letter-spacing="-0.01em">Without MCP</text>
+              <text x="350" y="152" text-anchor="middle" font-size="13" fill="#64748b" font-style="italic">every platform, its own API</text>
+
+              <g filter="url(#mcp-shadow)">
+                <rect x="270" y="180" width="160" height="90" rx="14" fill="url(#mcp-grad-blue)" stroke="#1e3a8a" stroke-width="2"/>
+              </g>
+              <text x="350" y="218" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">AI Agent</text>
+              <text x="350" y="246" text-anchor="middle" font-size="12" fill="#dbeafe">your LLM app</text>
+
+              <g filter="url(#mcp-shadow)">
+                <rect x="35" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#ea580c" stroke-width="2"/>
+              </g>
+              <text x="110" y="510" text-anchor="middle" font-size="20" font-weight="700" fill="#9a3412">Slack</text>
+              <text x="110" y="534" text-anchor="middle" font-size="11" fill="#64748b">team chat</text>
+
+              <g filter="url(#mcp-shadow)">
+                <rect x="195" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#16a34a" stroke-width="2"/>
+              </g>
+              <text x="270" y="510" text-anchor="middle" font-size="20" font-weight="700" fill="#14532d">Drive</text>
+              <text x="270" y="534" text-anchor="middle" font-size="11" fill="#64748b">file storage</text>
+
+              <g filter="url(#mcp-shadow)">
+                <rect x="355" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#db2777" stroke-width="2"/>
+              </g>
+              <text x="430" y="510" text-anchor="middle" font-size="20" font-weight="700" fill="#9d174d">GitHub</text>
+              <text x="430" y="534" text-anchor="middle" font-size="11" fill="#64748b">source code</text>
+
+              <g filter="url(#mcp-shadow)">
+                <rect x="515" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#0891b2" stroke-width="2"/>
+              </g>
+              <text x="590" y="510" text-anchor="middle" font-size="20" font-weight="700" fill="#155e75">Jira</text>
+              <text x="590" y="534" text-anchor="middle" font-size="11" fill="#64748b">issue tracker</text>
+            </g>
+
+            <!-- ══════════════ STEP 0 (cont.): the N×M tangle ══════════════ -->
+            <g data-step-order="0">
+              <path class="mcp-flow" d="M340,270 L134,440" stroke="#ea580c" stroke-width="3" fill="none" marker-end="url(#arr-orange)" stroke-linecap="round"/>
+              <path class="mcp-flow" d="M345,270 L278,440" stroke="#16a34a" stroke-width="3" fill="none" marker-end="url(#arr-green)" stroke-linecap="round"/>
+              <path class="mcp-flow" d="M355,270 L422,440" stroke="#db2777" stroke-width="3" fill="none" marker-end="url(#arr-pink)" stroke-linecap="round"/>
+              <path class="mcp-flow" d="M360,270 L566,440" stroke="#0891b2" stroke-width="3" fill="none" marker-end="url(#arr-cyan)" stroke-linecap="round"/>
+
+              <g>
+                <rect x="50" y="448" width="120" height="22" rx="11" fill="#ea580c"/>
+                <text x="110" y="464" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" letter-spacing="0.08em">SLACK WEB API</text>
+
+                <rect x="225" y="448" width="90" height="22" rx="11" fill="#16a34a"/>
+                <text x="270" y="464" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" letter-spacing="0.08em">DRIVE REST</text>
+
+                <rect x="392" y="448" width="76" height="22" rx="11" fill="#db2777"/>
+                <text x="430" y="464" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" letter-spacing="0.08em">GIT REST</text>
+
+                <rect x="548" y="448" width="84" height="22" rx="11" fill="#0891b2"/>
+                <text x="590" y="464" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" letter-spacing="0.08em">JIRA REST</text>
+              </g>
+
+              <text x="350" y="625" text-anchor="middle" font-size="14" font-weight="700" fill="#dc2626">N apps × M tools = N×M connectors</text>
+              <text x="350" y="648" text-anchor="middle" font-size="12" fill="#64748b" font-style="italic">every new tool means a new bespoke integration</text>
+            </g>
+
+            <!-- ══════════════ STEP 1: WITH MCP — agent + protocol + servers ══════════════ -->
+            <g data-step-order="1">
+              <text x="1050" y="128" text-anchor="middle" font-size="24" font-weight="800" fill="#7c3aed" letter-spacing="-0.01em">With MCP</text>
+              <text x="1050" y="152" text-anchor="middle" font-size="13" fill="#64748b" font-style="italic">one protocol — Model Context Protocol</text>
+
+              <g filter="url(#mcp-shadow)">
+                <rect x="970" y="180" width="160" height="90" rx="14" fill="url(#mcp-grad-blue)" stroke="#1e3a8a" stroke-width="2"/>
+              </g>
+              <text x="1050" y="216" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">AI Agent</text>
+              <text x="1050" y="244" text-anchor="middle" font-size="12" fill="#dbeafe">MCP client</text>
+
+              <g filter="url(#mcp-shadow)">
+                <rect x="735" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+              </g>
+              <rect x="765" y="448" width="90" height="22" rx="11" fill="#7c3aed"/>
+              <text x="810" y="464" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" letter-spacing="0.08em">MCP SERVER</text>
+              <text x="810" y="514" text-anchor="middle" font-size="20" font-weight="700" fill="#334155">Slack</text>
+              <text x="810" y="538" text-anchor="middle" font-size="11" fill="#64748b">team chat</text>
+
+              <g filter="url(#mcp-shadow)">
+                <rect x="895" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+              </g>
+              <rect x="925" y="448" width="90" height="22" rx="11" fill="#7c3aed"/>
+              <text x="970" y="464" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" letter-spacing="0.08em">MCP SERVER</text>
+              <text x="970" y="514" text-anchor="middle" font-size="20" font-weight="700" fill="#334155">Drive</text>
+              <text x="970" y="538" text-anchor="middle" font-size="11" fill="#64748b">file storage</text>
+
+              <g filter="url(#mcp-shadow)">
+                <rect x="1055" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+              </g>
+              <rect x="1085" y="448" width="90" height="22" rx="11" fill="#7c3aed"/>
+              <text x="1130" y="464" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" letter-spacing="0.08em">MCP SERVER</text>
+              <text x="1130" y="514" text-anchor="middle" font-size="20" font-weight="700" fill="#334155">GitHub</text>
+              <text x="1130" y="538" text-anchor="middle" font-size="11" fill="#64748b">source code</text>
+
+              <g filter="url(#mcp-shadow)">
+                <rect x="1215" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+              </g>
+              <rect x="1245" y="448" width="90" height="22" rx="11" fill="#7c3aed"/>
+              <text x="1290" y="464" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" letter-spacing="0.08em">MCP SERVER</text>
+              <text x="1290" y="514" text-anchor="middle" font-size="20" font-weight="700" fill="#334155">Jira</text>
+              <text x="1290" y="538" text-anchor="middle" font-size="11" fill="#64748b">issue tracker</text>
+            </g>
+
+            <!-- ══════════════ STEP 1 (cont.): one protocol fans out ══════════════ -->
+            <g data-step-order="1">
+              <path class="mcp-flow" d="M1050,270 L1050,358 L810,358 L810,438" stroke="#7c3aed" stroke-width="3.2" fill="none" marker-end="url(#arr-purple)" stroke-linecap="round"/>
+              <path class="mcp-flow" d="M1050,270 L1050,378 L970,378 L970,438" stroke="#7c3aed" stroke-width="3.2" fill="none" marker-end="url(#arr-purple)" stroke-linecap="round"/>
+              <path class="mcp-flow" d="M1050,270 L1050,378 L1130,378 L1130,438" stroke="#7c3aed" stroke-width="3.2" fill="none" marker-end="url(#arr-purple)" stroke-linecap="round"/>
+              <path class="mcp-flow" d="M1050,270 L1050,358 L1290,358 L1290,438" stroke="#7c3aed" stroke-width="3.2" fill="none" marker-end="url(#arr-purple)" stroke-linecap="round"/>
+
+              <text x="1050" y="625" text-anchor="middle" font-size="14" font-weight="700" fill="#7c3aed">Speak MCP once · plug into any tool</text>
+              <text x="1050" y="648" text-anchor="middle" font-size="12" fill="#64748b" font-style="italic">each tool ships an MCP server — your app never changes</text>
+            </g>
+          </svg>
         </div>
         <aside class="notes">
-          A quick aside before the architectures. Without MCP, every agent has to speak each platform's own API — Slack
-          one way, Drive another, Git a third — and you end up maintaining N times M custom connectors. With MCP, the
-          agent speaks one protocol; each tool ships an MCP server that does the translation. The blast radius of a new
-          tool drops from "build a custom integration" to "spin up an MCP server". Keep this in mind when we get to the
-          agentic orchestration diagram later — that is where MCP earns its keep.
+          Quick show of hands — anyone here know MCP? What is it, or what's it used for?
+
+          MCP — the Model Context Protocol — is an open standard that lets an AI agent talk to external tools and data in one consistent way. Think of it like USB-C for AI: instead of a custom cable for every device, one connector fits them all. Let me show you why that matters.
+
+          Look at the left side: each tool sits behind its own API — Slack Web API, Drive REST, Git REST, Jira REST — and the agent has to speak every one of them. That's the N×M tangle: every new app times every new tool is another new connector to build and maintain.
+
+          On the right, MCP flips it. The agent speaks one protocol; each tool ships an MCP server that wraps its own REST API behind it. Adding a tool goes from "build a custom integration" to "plug in another server" — your app never changes.
+
+          Now that you you maste the basics, I’ll let Razvan to present you one real world scenario.
         </aside>
       </section>
 
@@ -950,11 +1191,7 @@
         <h2 class="statement-title">Real-world <span class="accent">scenario</span></h2>
         <div class="accent-line"></div>
         <aside class="notes">
-          Picture this: you hear a Teams notification and already feel the context switch coming. In a feature channel,
-          someone asks how to configure rewards distribution—again. Either you are in flow on something new and do not
-          want to stop, or it has been so long that you would need to dig through wiki pages. You are a developer and an
-          AI enthusiast, so you wonder whether you can automate the answer—and you heard agents are the trend for
-          twenty-twenty-six.
+          Picture this: you hear a Teams notification and already feel the context switch coming. In a feature channel, someone asks how to configure rewards distribution—again. Either you are in flow on something new and do not want to stop, or it has been so long that you would need to dig through wiki pages. You are a developer and an AI enthusiast, so you wonder whether you can automate the answer—and you heard agents are the trend for twenty-twenty-six.
         </aside>
       </section>
 
@@ -964,12 +1201,7 @@
           <img src="presentation/diagram-naive.svg" alt="">
         </div>
         <aside class="notes">
-          So we sketch the simplest possible design. A chatbot registered to the Teams channel forwards the question
-          through a gateway into our Chatbot App. We have plenty of wiki pages from past work, so we fetch all that data
-          and serve it to the LLM alongside the question. This is an overly simplified example — in reality wiki data
-          would also go through a gateway and loading it into memory on every request is a bad idea — but bear with us.
-          We discover that we only need a good-enough prompt: all the wiki data plus the question from the channel, send
-          it to the LLM, and forward the response back to the chatbot. Quick prototype that works — for now.
+          So we sketch the simplest possible design. A chatbot registered to the Teams channel forwards the question through a gateway into our Chatbot App. We have plenty of wiki pages from past work, so we fetch all that data and serve it to the LLM alongside the question. This is an overly simplified example — in reality wiki data would also go through a gateway and loading it into memory on every request is a bad idea — but bear with us. We discover that we only need a good-enough prompt: all the wiki data plus the question from the channel, send it to the LLM, and forward the response back to the chatbot. Quick prototype that works — for now.
         </aside>
       </section>
 
@@ -986,12 +1218,7 @@
           <div class="bc-card ch" data-step-order="5">Cost of usage — every request is forwarded to the LLM</div>
         </div>
         <aside class="notes">
-          What we achieved: we process a lot of data at once, so the chatbot does not have to first locate the right
-          wiki page. But adding all that data risks exceeding the LLM's maximum context window. The simple solution
-          gives us a fast time to market — at the cost of forwarding every single question to the LLM, so the bill
-          explodes the moment two people start chatting in the channel. We use prompt engineering to keep answers
-          focused, yet with so much unrelated wiki content in the context we still see hallucinations and wrong answers.
-          Walk through each benefit and its matching challenge as you advance.
+          What we achieved: we process a lot of data at once, so the chatbot does not have to first locate the right wiki page. But adding all that data risks exceeding the LLM's maximum context window. The simple solution gives us a fast time to market — at the cost of forwarding every single question to the LLM, so the bill explodes the moment two people start chatting in the channel. We use prompt engineering to keep answers focused, yet with so much unrelated wiki content in the context we still see hallucinations and wrong answers. Walk through each benefit and its matching challenge as you advance.
         </aside>
       </section>
 
@@ -1001,12 +1228,7 @@
           <img src="presentation/diagram-rag-cache.svg" alt="">
         </div>
         <aside class="notes">
-          Back to the drawing board. We remember what Adrian said about RAG, and we decide to implement semantic
-          caching. We take all the wiki pages, run them through a document vectorization step — there are plenty of
-          third-party apps for this — and store the result in a vector database. Now when a question arrives, we do a
-          semantic similarity search to fetch only the chunks that match, use them as focused context for the LLM, and
-          return the response. Again, an oversimplification — in reality we would need triggers to keep the DB in sync
-          with wiki updates — but the architecture is much sharper than the naive version.
+          Back to the drawing board. We remember what Adrian said about RAG, and we decide to implement semantic caching. We take all the wiki pages, run them through a document vectorization step — there are plenty of third-party apps for this — and store the result in a vector database. Now when a question arrives, we do a semantic similarity search to fetch only the chunks that match, use them as focused context for the LLM, and return the response. Again, an oversimplification — in reality we would need triggers to keep the DB in sync with wiki updates — but the architecture is much sharper than the naive version.
         </aside>
       </section>
 
@@ -1023,12 +1245,7 @@
           <div class="bc-card ch" data-step-order="5">More complex architecture</div>
         </div>
         <aside class="notes">
-          Let us see how we improved. We now enhance prompts with focused, question-specific data — but to create the
-          vectors we depend on a third-party solution that can be expensive or inaccurate. We retrieve only wiki data
-          related to the question, fast, thanks to the database — though we have introduced a new component: external
-          storage. By feeding only relevant data to the LLM, we lean less on its general knowledge and reduce
-          hallucinations — yet the architecture is more complex and the per-request LLM cost has not improved yet. So we
-          go back to the drawing board for one more iteration.
+          Let us see how we improved. We now enhance prompts with focused, question-specific data — but to create the vectors we depend on a third-party solution that can be expensive or inaccurate. We retrieve only wiki data related to the question, fast, thanks to the database — though we have introduced a new component: external storage. By feeding only relevant data to the LLM, we lean less on its general knowledge and reduce hallucinations — yet the architecture is more complex and the per-request LLM cost has not improved yet. So we go back to the drawing board for one more iteration.
         </aside>
       </section>
 
@@ -1038,13 +1255,7 @@
           <img src="presentation/diagram-chat-history.svg" alt="">
         </div>
         <aside class="notes">
-          Now we layer chat history on top of the semantic search from the previous iteration. The goal is still to cut
-          LLM cost. When a question arrives, we first search a vector database of past question-and-answer pairs. If the
-          similarity is above our threshold, we return the cached answer and skip the LLM entirely. Only on a miss do we
-          fall back to the wiki RAG path: vector-search the wiki, build a rich prompt with the retrieved context, call
-          the LLM, then vectorize and store the new Q+A pair in chat history before responding. The Chatbot App in this
-          diagram orchestrates both the cache lookup and the retrieval path — we pay the LLM only when no past answer
-          fits.
+          Now we layer chat history on top of the semantic search from the previous iteration. The goal is still to cut LLM cost. When a question arrives, we first search a vector database of past question-and-answer pairs. If the similarity is above our threshold, we return the cached answer and skip the LLM entirely. Only on a miss do we fall back to the wiki RAG path: vector-search the wiki, build a rich prompt with the retrieved context, call the LLM, then vectorize and store the new Q+A pair in chat history before responding. The Chatbot App in this diagram orchestrates both the cache lookup and the retrieval path — we pay the LLM only when no past answer fits.
         </aside>
       </section>
 
@@ -1065,12 +1276,7 @@
           <div class="bc-card ch" data-step-order="5">Overall complexity increased again</div>
         </div>
         <aside class="notes">
-          We achieved what we set out to do: cut the cost of LLM calls and speed up responses, because the fastest
-          answer now comes straight from the database. We also bought ourselves a layer of fault tolerance — if the LLM
-          is down, the chat-history DB can still answer. The trade-offs: we have to fine-tune the similarity threshold
-          carefully to avoid partial answers; if the wiki changes in the meantime, cached responses go stale and we need
-          a sync mechanism to invalidate them; and the overall architecture is more complex again. Walk through each
-          benefit and its matching challenge as you advance.
+          We achieved what we set out to do: cut the cost of LLM calls and speed up responses, because the fastest answer now comes straight from the database. We also bought ourselves a layer of fault tolerance — if the LLM is down, the chat-history DB can still answer. The trade-offs: we have to fine-tune the similarity threshold carefully to avoid partial answers; if the wiki changes in the meantime, cached responses go stale and we need a sync mechanism to invalidate them; and the overall architecture is more complex again. Walk through each benefit and its matching challenge as you advance.
         </aside>
       </section>
 
@@ -1080,10 +1286,7 @@
           <img src="presentation/diagram-orchestrator.svg" alt="">
         </div>
         <aside class="notes">
-          We moved from a POC-style pipeline toward something more production-shaped. The important distinction: there
-          is one orchestrator agent inside the Chatbot Orchestrator-it decides which tools to call and merges results.
-          RAG search, chat history lookup, and web search are tools, not separate agents. The agent routes the request,
-          invokes tools, builds the best prompt, calls the LLM when needed, and returns a confident answer.
+          We moved from a POC-style pipeline toward something more production-shaped. The important distinction: there is one orchestrator agent inside the Chatbot Orchestrator-it decides which tools to call and merges results. RAG search, chat history lookup, and web search are tools, not separate agents. The agent routes the request, invokes tools, builds the best prompt, calls the LLM when needed, and returns a confident answer.
         </aside>
       </section>
 
@@ -1103,12 +1306,7 @@
           <div class="bc-card ch" data-step-order="5">Architecture has become even more complex</div>
         </div>
         <aside class="notes">
-          We successfully addressed the main drawback of the previous iteration — partial responses and outdated data —
-          by routing smarter and enriching context. The cost is response time: data has to travel through multiple
-          components. The big modularity win is that we can add or extend a single tool without redeploying or impacting
-          the rest of the system — but that demands an equally sophisticated infrastructure for continuous deployment
-          and high availability. We also picked up additional fault tolerance via the web search tool: when other tools
-          cannot answer, it kicks in. The trade-off is obvious from the diagram — the architecture is even more complex.
+          We successfully addressed the main drawback of the previous iteration — partial responses and outdated data — by routing smarter and enriching context. The cost is response time: data has to travel through multiple components. The big modularity win is that we can add or extend a single tool without redeploying or impacting the rest of the system — but that demands an equally sophisticated infrastructure for continuous deployment and high availability. We also picked up additional fault tolerance via the web search tool: when other tools cannot answer, it kicks in. The trade-off is obvious from the diagram — the architecture is even more complex.
         </aside>
       </section>
 
@@ -1117,11 +1315,7 @@
         <h2 class="demo-title">DEMO</h2>
         <div class="accent-line"></div>
         <aside class="notes">
-          Enough theory—we are on the Java stage. Spring AI recently hit general availability, and it is how we built
-          the demo you are about to see. In the chatai project we use Docker Compose for Ollama and Postgres, the chat
-          service wires vector advisors and chat memory, and tools expose wiki lookup plus a simulated web search for
-          board games. Run a quick live pass: ask about rewards distribution for a feature, then about Monopoly or Chess
-          rewards.
+          TBD
         </aside>
       </section>
 
@@ -1130,9 +1324,7 @@
         <h2 class="statement-title">This presentation was made with <span class="accent">AI</span></h2>
         <div class="accent-line"></div>
         <aside class="notes">
-          After seeing a real stack, we can answer the question from the start: yes, AI is here to stay. It will be
-          embedded in how we process large amounts of data and act on the results. And yes—even this deck was drafted
-          and refined with AI assistance, which is itself part of the story.
+          After seeing a real stack, we can answer the question from the start: yes, AI is here to stay. It will be embedded in how we process large amounts of data and act on the results. And yes—even this deck was drafted and refined with AI assistance, which is itself part of the story.
         </aside>
       </section>
 
@@ -1153,8 +1345,7 @@
           </div>
         </div>
         <aside class="notes">
-          Thank you for your time. Scan the codes if you would like to connect with either of us. We are happy to take
-          questions on agents, RAG, orchestration, or the Spring AI demo.
+          Thank you for your time. Scan the codes if you would like to connect with either of us. We are happy to take questions on agents, RAG, orchestration, or the Spring AI demo.
         </aside>
       </section>
 
