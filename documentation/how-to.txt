@@ -1,0 +1,5 @@
+# Extract notes from the HTML into a Markdown file
+python3 notes_tool.py extract ai-architecture.html
+
+# Edit speaker-notes.md, then write the notes back into the HTML
+python3 notes_tool.py apply ai-architecture.html speaker-notes.md

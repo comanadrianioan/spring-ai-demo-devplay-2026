@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 720" font-family="Inter, -apple-system, system-ui, sans-serif">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-opacity="0.1"/>
+    </filter>
+    <linearGradient id="grad-blue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <!-- Big arrow markers -->
+    <marker id="big-arr" markerWidth="20" markerHeight="16" refX="19" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L20,8 L0,16 Z" fill="#475569"/>
+    </marker>
+    <marker id="big-arr-start" markerWidth="20" markerHeight="16" refX="1" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M20,0 L0,8 L20,16 Z" fill="#475569"/>
+    </marker>
+    <marker id="big-arr-blue" markerWidth="20" markerHeight="16" refX="19" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L20,8 L0,16 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="big-arr-blue-start" markerWidth="20" markerHeight="16" refX="1" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M20,0 L0,8 L20,16 Z" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+  <!-- ══════════════ TEAMS ══════════════ -->
+  <g filter="url(#shadow)">
+    <rect x="30" y="120" width="200" height="120" rx="14" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2.5"/>
+  </g>
+  <text x="130" y="160" text-anchor="middle" font-size="20" font-weight="700" fill="#4c1d95">Microsoft Teams</text>
+  <text x="130" y="182" text-anchor="middle" font-size="14" fill="#7c3aed">User question</text>
+  <rect x="50" y="194" width="160" height="32" rx="6" fill="#fff" stroke="#c4b5fd" stroke-width="1.5"/>
+  <text x="130" y="214" text-anchor="middle" font-size="12" fill="#475569" font-style="italic">"rewards in feature X?"</text>
+
+  <!-- ══════════════ Teams ↔ Gateway (big arrow) ══════════════ -->
+  <path d="M230,180 L300,180" stroke="#475569" stroke-width="4" fill="none" marker-start="url(#big-arr-start)" marker-end="url(#big-arr)" stroke-linecap="round"/>
+
+  <!-- ══════════════ GATEWAY ══════════════ -->
+  <g filter="url(#shadow)">
+    <rect x="300" y="140" width="120" height="80" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5"/>
+  </g>
+  <polygon points="360,157 388,172 388,188 360,203 332,188 332,172" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="360" y="184" text-anchor="middle" font-size="13" font-weight="700" fill="#9a3412">API</text>
+  <text x="360" y="240" text-anchor="middle" font-size="16" font-weight="700" fill="#9a3412">Gateway</text>
+
+  <!-- ══════════════ Gateway ↔ Chatbot App (big arrow) ══════════════ -->
+  <path d="M420,180 L490,180" stroke="#475569" stroke-width="4" fill="none" marker-start="url(#big-arr-start)" marker-end="url(#big-arr)" stroke-linecap="round"/>
+
+  <!-- ══════════════ CHATBOT APP CONTAINER ══════════════ -->
+  <g filter="url(#shadow)">
+    <rect x="490" y="60" width="560" height="420" rx="20" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
+  </g>
+  <text x="770" y="100" text-anchor="middle" font-size="24" font-weight="700" fill="#1e3a8a">Chatbot App</text>
+
+  <!-- Step 1 -->
+  <g filter="url(#shadow)">
+    <rect x="520" y="130" width="500" height="100" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+  </g>
+  <circle cx="570" cy="180" r="30" fill="url(#grad-blue)"/>
+  <text x="570" y="190" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">1</text>
+  <text x="620" y="172" font-size="20" font-weight="700" fill="#1e293b">Fetch wiki pages</text>
+  <text x="620" y="200" font-size="13" fill="#64748b">Download full documentation content</text>
+
+  <!-- Step 1 → Step 2 (BIG internal arrow) -->
+  <path d="M770,230 L770,280" stroke="#475569" stroke-width="4" fill="none" marker-end="url(#big-arr)" stroke-linecap="round"/>
+
+  <!-- Step 2 -->
+  <g filter="url(#shadow)">
+    <rect x="520" y="280" width="500" height="100" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+  </g>
+  <circle cx="570" cy="330" r="30" fill="url(#grad-blue)"/>
+  <text x="570" y="340" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">2</text>
+  <text x="620" y="322" font-size="20" font-weight="700" fill="#1e293b">Build prompt &amp; call LLM</text>
+  <text x="620" y="350" font-size="13" fill="#64748b">Full wiki + question sent in single prompt</text>
+
+  <!-- ══════════════ WIKI PAGES (aligned with Step 1, center y=180) ══════════════ -->
+  <g filter="url(#shadow)">
+    <rect x="1150" y="130" width="180" height="100" rx="14" fill="#fff" stroke="#334155" stroke-width="2.5"/>
+  </g>
+  <rect x="1185" y="148" width="110" height="6" rx="1" fill="#e2e8f0"/>
+  <rect x="1185" y="160" width="110" height="6" rx="1" fill="#e2e8f0"/>
+  <rect x="1185" y="172" width="110" height="6" rx="1" fill="#e2e8f0"/>
+  <text x="1240" y="202" text-anchor="middle" font-size="18" font-weight="700" fill="#334155">Wiki pages</text>
+  <text x="1240" y="220" text-anchor="middle" font-size="12" fill="#64748b">source docs (Confluence)</text>
+
+  <!-- Step 1 ↔ Wiki pages (straight horizontal, big arrow) -->
+  <path d="M1020,180 L1150,180" stroke="#475569" stroke-width="4" fill="none" marker-start="url(#big-arr-start)" marker-end="url(#big-arr)" stroke-linecap="round"/>
+
+  <!-- ══════════════ LLM (aligned with Step 2, center y=330) ══════════════ -->
+  <g filter="url(#shadow)">
+    <rect x="1150" y="280" width="180" height="100" rx="14" fill="#f0fdfa" stroke="#0d9488" stroke-width="2.5"/>
+  </g>
+  <text x="1240" y="320" text-anchor="middle" font-size="22" font-weight="700" fill="#134e4a">LLM</text>
+  <text x="1240" y="348" text-anchor="middle" font-size="14" fill="#0f766e">Chat GPT</text>
+  <text x="1240" y="366" text-anchor="middle" font-size="11" fill="#94a3b8">external API</text>
+
+  <!-- Step 2 ↔ LLM (straight horizontal, big arrow) -->
+  <path d="M1020,330 L1150,330" stroke="#2563eb" stroke-width="4" fill="none" marker-start="url(#big-arr-blue-start)" marker-end="url(#big-arr-blue)" stroke-linecap="round"/>
+</svg>

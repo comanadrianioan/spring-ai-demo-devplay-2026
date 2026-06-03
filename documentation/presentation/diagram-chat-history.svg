@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 720" font-family="Inter, -apple-system, system-ui, sans-serif">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-opacity="0.1"/>
+    </filter>
+    <linearGradient id="grad-blue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <!-- Big arrow markers (used for ALL arrows) -->
+    <marker id="big-arr" markerWidth="20" markerHeight="16" refX="19" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L20,8 L0,16 Z" fill="#475569"/>
+    </marker>
+    <marker id="big-arr-start" markerWidth="20" markerHeight="16" refX="1" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M20,0 L0,8 L20,16 Z" fill="#475569"/>
+    </marker>
+    <marker id="big-arr-blue" markerWidth="20" markerHeight="16" refX="19" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L20,8 L0,16 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="big-arr-blue-start" markerWidth="20" markerHeight="16" refX="1" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M20,0 L0,8 L20,16 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="big-arr-green" markerWidth="20" markerHeight="16" refX="19" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L20,8 L0,16 Z" fill="#16a34a"/>
+    </marker>
+    <marker id="big-arr-green-start" markerWidth="20" markerHeight="16" refX="1" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M20,0 L0,8 L20,16 Z" fill="#16a34a"/>
+    </marker>
+    <marker id="big-arr-pink" markerWidth="20" markerHeight="16" refX="19" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L20,8 L0,16 Z" fill="#db2777"/>
+    </marker>
+    <marker id="big-arr-pink-start" markerWidth="20" markerHeight="16" refX="1" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M20,0 L0,8 L20,16 Z" fill="#db2777"/>
+    </marker>
+  </defs>
+
+  <!-- ══════════════ TEAMS ══════════════ -->
+  <g filter="url(#shadow)">
+    <rect x="30" y="100" width="200" height="120" rx="14" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2.5"/>
+  </g>
+  <text x="130" y="138" text-anchor="middle" font-size="20" font-weight="700" fill="#4c1d95">Microsoft Teams</text>
+  <text x="130" y="160" text-anchor="middle" font-size="14" fill="#7c3aed">User question</text>
+  <rect x="50" y="172" width="160" height="36" rx="6" fill="#fff" stroke="#c4b5fd" stroke-width="1.5"/>
+  <text x="130" y="195" text-anchor="middle" font-size="12" fill="#475569" font-style="italic">"rewards in feature X?"</text>
+
+  <!-- ══════════════ Teams ↔ Gateway (big arrow) ══════════════ -->
+  <path d="M230,160 L300,160" stroke="#475569" stroke-width="4" fill="none" marker-start="url(#big-arr-start)" marker-end="url(#big-arr)" stroke-linecap="round"/>
+
+  <!-- ══════════════ GATEWAY ══════════════ -->
+  <g filter="url(#shadow)">
+    <rect x="300" y="120" width="120" height="80" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5"/>
+  </g>
+  <polygon points="360,137 388,152 388,168 360,183 332,168 332,152" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="360" y="164" text-anchor="middle" font-size="13" font-weight="700" fill="#9a3412">API</text>
+  <text x="360" y="220" text-anchor="middle" font-size="16" font-weight="700" fill="#9a3412">Gateway</text>
+
+  <!-- ══════════════ Gateway ↔ Chatbot App (big arrow) ══════════════ -->
+  <path d="M420,160 L490,160" stroke="#475569" stroke-width="4" fill="none" marker-start="url(#big-arr-start)" marker-end="url(#big-arr)" stroke-linecap="round"/>
+
+  <!-- ══════════════ CHATBOT APP CONTAINER ══════════════ -->
+  <g filter="url(#shadow)">
+    <rect x="490" y="40" width="560" height="640" rx="20" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
+  </g>
+  <text x="770" y="80" text-anchor="middle" font-size="24" font-weight="700" fill="#1e3a8a">Chatbot App</text>
+
+  <!-- Step 1 -->
+  <g filter="url(#shadow)">
+    <rect x="520" y="110" width="500" height="100" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+  </g>
+  <circle cx="570" cy="160" r="30" fill="url(#grad-blue)"/>
+  <text x="570" y="170" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">1</text>
+  <text x="620" y="152" font-size="20" font-weight="700" fill="#1e293b">Check chat history</text>
+  <text x="620" y="180" font-size="13" fill="#64748b">Semantic search for similar past questions</text>
+
+  <!-- Step 1 → Step 2 (BIG internal arrow) -->
+  <path d="M770,210 L770,260" stroke="#475569" stroke-width="4" fill="none" marker-end="url(#big-arr)" stroke-linecap="round"/>
+  <text x="790" y="240" font-size="13" fill="#64748b" font-style="italic">on miss</text>
+
+  <!-- Step 2 -->
+  <g filter="url(#shadow)">
+    <rect x="520" y="260" width="500" height="100" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+  </g>
+  <circle cx="570" cy="310" r="30" fill="url(#grad-blue)"/>
+  <text x="570" y="320" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">2</text>
+  <text x="620" y="302" font-size="20" font-weight="700" fill="#1e293b">Retrieve wiki context</text>
+  <text x="620" y="330" font-size="13" fill="#64748b">Top-K vector search over indexed docs</text>
+
+  <!-- Step 2 → Step 3 (BIG internal arrow) -->
+  <path d="M770,360 L770,410" stroke="#475569" stroke-width="4" fill="none" marker-end="url(#big-arr)" stroke-linecap="round"/>
+
+  <!-- Step 3 -->
+  <g filter="url(#shadow)">
+    <rect x="520" y="410" width="500" height="100" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+  </g>
+  <circle cx="570" cy="460" r="30" fill="url(#grad-blue)"/>
+  <text x="570" y="470" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">3</text>
+  <text x="620" y="452" font-size="20" font-weight="700" fill="#1e293b">Build prompt &amp; call LLM</text>
+  <text x="620" y="480" font-size="13" fill="#64748b">Augmented prompt with retrieved context</text>
+
+  <!-- Step 3 → Step 4 (BIG internal arrow) -->
+  <path d="M770,510 L770,560" stroke="#475569" stroke-width="4" fill="none" marker-end="url(#big-arr)" stroke-linecap="round"/>
+
+  <!-- Step 4 -->
+  <g filter="url(#shadow)">
+    <rect x="520" y="560" width="500" height="100" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+  </g>
+  <circle cx="570" cy="610" r="30" fill="url(#grad-blue)"/>
+  <text x="570" y="620" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">4</text>
+  <text x="620" y="602" font-size="20" font-weight="700" fill="#1e293b">Cache result &amp; respond</text>
+  <text x="620" y="630" font-size="13" fill="#64748b">Store Q+A pair, return answer to user</text>
+
+  <!-- ══════════════ CHAT HISTORY VECTOR DB (visual center at y=160) ══════════════ -->
+  <g filter="url(#shadow)">
+    <path d="M 1150,125 L 1150,195 A 80,18 0 0 0 1310,195 L 1310,125" fill="#fdf2f8" stroke="#db2777" stroke-width="2.5"/>
+    <ellipse cx="1230" cy="125" rx="80" ry="18" fill="#fdf2f8" stroke="#db2777" stroke-width="2.5"/>
+  </g>
+  <text x="1230" y="165" text-anchor="middle" font-size="18" font-weight="700" fill="#9d174d">Chat History</text>
+  <text x="1230" y="188" text-anchor="middle" font-size="16" font-weight="600" fill="#9d174d">Vector DB</text>
+
+  <!-- Step 1 ↔ Chat History DB (big arrow, to cylinder visual center y=160) -->
+  <path d="M1020,160 L1150,160" stroke="#db2777" stroke-width="4" fill="none" marker-start="url(#big-arr-pink-start)" marker-end="url(#big-arr-pink)" stroke-linecap="round"/>
+
+  <!-- ══════════════ WIKI VECTOR DB (visual center at y=310) ══════════════ -->
+  <g filter="url(#shadow)">
+    <path d="M 1150,275 L 1150,345 A 80,18 0 0 0 1310,345 L 1310,275" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+    <ellipse cx="1230" cy="275" rx="80" ry="18" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+  </g>
+  <text x="1230" y="315" text-anchor="middle" font-size="18" font-weight="700" fill="#14532d">Wiki</text>
+  <text x="1230" y="338" text-anchor="middle" font-size="16" font-weight="600" fill="#14532d">Vector DB</text>
+
+  <!-- Step 2 ↔ Wiki Vector DB (big arrow, to cylinder visual center y=310) -->
+  <path d="M1020,310 L1150,310" stroke="#16a34a" stroke-width="4" fill="none" marker-start="url(#big-arr-green-start)" marker-end="url(#big-arr-green)" stroke-linecap="round"/>
+
+  <!-- ══════════════ LLM (visual center at y=460) ══════════════ -->
+  <g filter="url(#shadow)">
+    <rect x="1150" y="410" width="160" height="100" rx="14" fill="#f0fdfa" stroke="#0d9488" stroke-width="2.5"/>
+  </g>
+  <text x="1230" y="450" text-anchor="middle" font-size="22" font-weight="700" fill="#134e4a">LLM</text>
+  <text x="1230" y="478" text-anchor="middle" font-size="14" fill="#0f766e">Chat GPT</text>
+
+  <!-- Step 3 ↔ LLM (big arrow, to LLM center y=460) -->
+  <path d="M1020,460 L1150,460" stroke="#2563eb" stroke-width="4" fill="none" marker-start="url(#big-arr-blue-start)" marker-end="url(#big-arr-blue)" stroke-linecap="round"/>
+
+  <!-- ══════════════ Step 4 → Chat History DB (dashed pink, store Q+A) ══════════════ -->
+  <path d="M1020,610 L1370,610 L1370,160 L1310,160" stroke="#db2777" stroke-width="4" fill="none" stroke-dasharray="9 5" marker-end="url(#big-arr-pink)" stroke-linecap="round"/>
+  <text x="1195" y="600" text-anchor="middle" font-size="15" font-weight="700" fill="#db2777" letter-spacing="0.04em">store Q+A</text>
+</svg>

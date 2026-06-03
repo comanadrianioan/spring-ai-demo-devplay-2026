@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 720" font-family="Inter, -apple-system, system-ui, sans-serif">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-opacity="0.1"/>
+    </filter>
+    <linearGradient id="grad-blue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <!-- Arrow markers — one per service color (left side) + purple (right side) -->
+    <marker id="arr-orange" markerWidth="18" markerHeight="14" refX="17" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L18,7 L0,14 Z" fill="#ea580c"/>
+    </marker>
+    <marker id="arr-green" markerWidth="18" markerHeight="14" refX="17" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L18,7 L0,14 Z" fill="#16a34a"/>
+    </marker>
+    <marker id="arr-pink" markerWidth="18" markerHeight="14" refX="17" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L18,7 L0,14 Z" fill="#db2777"/>
+    </marker>
+    <marker id="arr-cyan" markerWidth="18" markerHeight="14" refX="17" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L18,7 L0,14 Z" fill="#0891b2"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="18" markerHeight="14" refX="17" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L18,7 L0,14 Z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+
+  <!-- ══════════════ TOP TITLE ══════════════ -->
+  <text x="700" y="46" text-anchor="middle" font-size="26" font-weight="800" fill="#1e293b">MCP — Model Context Protocol</text>
+  <text x="700" y="74" text-anchor="middle" font-size="14" fill="#64748b">From bespoke integrations to a universal connector</text>
+
+  <!-- Vertical divider -->
+  <line x1="700" y1="100" x2="700" y2="668" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4 6"/>
+
+  <!-- ══════════════ LEFT PANEL — WITHOUT MCP ══════════════ -->
+
+  <!-- Panel header -->
+  <text x="350" y="128" text-anchor="middle" font-size="24" font-weight="800" fill="#dc2626" letter-spacing="-0.01em">Without MCP</text>
+  <text x="350" y="152" text-anchor="middle" font-size="13" fill="#64748b" font-style="italic">every platform, its own API</text>
+
+  <!-- AI Agent (left) -->
+  <g filter="url(#shadow)">
+    <rect x="270" y="180" width="160" height="90" rx="14" fill="url(#grad-blue)" stroke="#1e3a8a" stroke-width="2"/>
+  </g>
+  <text x="350" y="218" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">AI Agent</text>
+  <text x="350" y="246" text-anchor="middle" font-size="12" fill="#dbeafe">your LLM app</text>
+
+  <!-- 4 service boxes at bottom — each with a unique colored left bar -->
+  <!-- Slack -->
+  <g filter="url(#shadow)">
+    <rect x="35" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#ea580c" stroke-width="2.2"/>
+  </g>
+  <rect x="35" y="460" width="7" height="100" fill="#ea580c" rx="3"/>
+  <text x="110" y="510" text-anchor="middle" font-size="20" font-weight="700" fill="#9a3412">Slack</text>
+  <text x="110" y="534" text-anchor="middle" font-size="11" fill="#64748b">team chat</text>
+
+  <!-- Drive -->
+  <g filter="url(#shadow)">
+    <rect x="195" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#16a34a" stroke-width="2.2"/>
+  </g>
+  <rect x="195" y="460" width="7" height="100" fill="#16a34a" rx="3"/>
+  <text x="270" y="510" text-anchor="middle" font-size="20" font-weight="700" fill="#14532d">Drive</text>
+  <text x="270" y="534" text-anchor="middle" font-size="11" fill="#64748b">file storage</text>
+
+  <!-- GitHub -->
+  <g filter="url(#shadow)">
+    <rect x="355" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#db2777" stroke-width="2.2"/>
+  </g>
+  <rect x="355" y="460" width="7" height="100" fill="#db2777" rx="3"/>
+  <text x="430" y="510" text-anchor="middle" font-size="20" font-weight="700" fill="#9d174d">GitHub</text>
+  <text x="430" y="534" text-anchor="middle" font-size="11" fill="#64748b">source code</text>
+
+  <!-- Jira -->
+  <g filter="url(#shadow)">
+    <rect x="515" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#0891b2" stroke-width="2.2"/>
+  </g>
+  <rect x="515" y="460" width="7" height="100" fill="#0891b2" rx="3"/>
+  <text x="590" y="510" text-anchor="middle" font-size="20" font-weight="700" fill="#155e75">Jira</text>
+  <text x="590" y="534" text-anchor="middle" font-size="11" fill="#64748b">issue tracker</text>
+
+  <!-- 4 diagonal connection arrows — each its own color -->
+  <!-- Agent (350, 270) → service top centers -->
+  <path d="M340,270 L110,460" stroke="#ea580c" stroke-width="3" fill="none" marker-end="url(#arr-orange)" stroke-linecap="round"/>
+  <path d="M345,270 L270,460" stroke="#16a34a" stroke-width="3" fill="none" marker-end="url(#arr-green)" stroke-linecap="round"/>
+  <path d="M355,270 L430,460" stroke="#db2777" stroke-width="3" fill="none" marker-end="url(#arr-pink)" stroke-linecap="round"/>
+  <path d="M360,270 L590,460" stroke="#0891b2" stroke-width="3" fill="none" marker-end="url(#arr-cyan)" stroke-linecap="round"/>
+
+  <!-- Arrow labels (per-service API name, placed near each arrow's lower portion) -->
+  <g font-size="11" font-weight="700">
+    <rect x="58" y="416" width="104" height="22" rx="4" fill="#fff" stroke="#ea580c" stroke-width="1.2"/>
+    <text x="110" y="432" text-anchor="middle" fill="#9a3412">Slack Web API</text>
+
+    <rect x="230" y="416" width="80" height="22" rx="4" fill="#fff" stroke="#16a34a" stroke-width="1.2"/>
+    <text x="270" y="432" text-anchor="middle" fill="#14532d">Drive REST</text>
+
+    <rect x="385" y="416" width="90" height="22" rx="4" fill="#fff" stroke="#db2777" stroke-width="1.2"/>
+    <text x="430" y="432" text-anchor="middle" fill="#9d174d">Git REST</text>
+
+    <rect x="552" y="416" width="76" height="22" rx="4" fill="#fff" stroke="#0891b2" stroke-width="1.2"/>
+    <text x="590" y="432" text-anchor="middle" fill="#155e75">Jira REST</text>
+  </g>
+
+  <!-- Bottom annotation -->
+  <text x="350" y="625" text-anchor="middle" font-size="14" font-weight="700" fill="#dc2626">N apps × M tools = N×M connectors</text>
+  <text x="350" y="648" text-anchor="middle" font-size="12" fill="#64748b" font-style="italic">every new tool means a new bespoke integration</text>
+
+  <!-- ══════════════ RIGHT PANEL — WITH MCP ══════════════ -->
+
+  <!-- Panel header -->
+  <text x="1050" y="128" text-anchor="middle" font-size="24" font-weight="800" fill="#7c3aed" letter-spacing="-0.01em">With MCP</text>
+  <text x="1050" y="152" text-anchor="middle" font-size="13" fill="#64748b" font-style="italic">one protocol — Model Context Protocol</text>
+
+  <!-- AI Agent (right) -->
+  <g filter="url(#shadow)">
+    <rect x="970" y="180" width="160" height="90" rx="14" fill="url(#grad-blue)" stroke="#1e3a8a" stroke-width="2"/>
+  </g>
+  <text x="1050" y="216" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">AI Agent</text>
+  <text x="1050" y="244" text-anchor="middle" font-size="12" fill="#dbeafe">MCP client</text>
+
+  <!-- 4 service boxes at bottom (mirrored from left) — each with MCP Server badge on top -->
+  <!-- Slack -->
+  <g filter="url(#shadow)">
+    <rect x="735" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2.2"/>
+  </g>
+  <rect x="735" y="460" width="7" height="100" fill="#7c3aed" rx="3"/>
+  <rect x="765" y="448" width="90" height="22" rx="11" fill="#7c3aed"/>
+  <text x="810" y="464" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" letter-spacing="0.08em">MCP SERVER</text>
+  <text x="810" y="514" text-anchor="middle" font-size="20" font-weight="700" fill="#334155">Slack</text>
+  <text x="810" y="538" text-anchor="middle" font-size="11" fill="#64748b">team chat</text>
+
+  <!-- Drive -->
+  <g filter="url(#shadow)">
+    <rect x="895" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2.2"/>
+  </g>
+  <rect x="895" y="460" width="7" height="100" fill="#7c3aed" rx="3"/>
+  <rect x="925" y="448" width="90" height="22" rx="11" fill="#7c3aed"/>
+  <text x="970" y="464" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" letter-spacing="0.08em">MCP SERVER</text>
+  <text x="970" y="514" text-anchor="middle" font-size="20" font-weight="700" fill="#334155">Drive</text>
+  <text x="970" y="538" text-anchor="middle" font-size="11" fill="#64748b">file storage</text>
+
+  <!-- GitHub -->
+  <g filter="url(#shadow)">
+    <rect x="1055" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2.2"/>
+  </g>
+  <rect x="1055" y="460" width="7" height="100" fill="#7c3aed" rx="3"/>
+  <rect x="1085" y="448" width="90" height="22" rx="11" fill="#7c3aed"/>
+  <text x="1130" y="464" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" letter-spacing="0.08em">MCP SERVER</text>
+  <text x="1130" y="514" text-anchor="middle" font-size="20" font-weight="700" fill="#334155">GitHub</text>
+  <text x="1130" y="538" text-anchor="middle" font-size="11" fill="#64748b">source code</text>
+
+  <!-- Jira -->
+  <g filter="url(#shadow)">
+    <rect x="1215" y="460" width="150" height="100" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2.2"/>
+  </g>
+  <rect x="1215" y="460" width="7" height="100" fill="#7c3aed" rx="3"/>
+  <rect x="1245" y="448" width="90" height="22" rx="11" fill="#7c3aed"/>
+  <text x="1290" y="464" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" letter-spacing="0.08em">MCP SERVER</text>
+  <text x="1290" y="514" text-anchor="middle" font-size="20" font-weight="700" fill="#334155">Jira</text>
+  <text x="1290" y="538" text-anchor="middle" font-size="11" fill="#64748b">issue tracker</text>
+
+  <!-- 4 IDENTICAL orthogonal MCP arrows (Agent → service top), all dashed purple -->
+  <!-- Agent bottom center: (1050, 270) -->
+  <!-- To Slack: L-shape down then left then down -->
+  <path d="M1050,270 L1050,358 L810,358 L810,438" stroke="#7c3aed" stroke-width="3.2" fill="none" stroke-dasharray="9 5" marker-end="url(#arr-purple)" stroke-linecap="round"/>
+  <!-- To Drive -->
+  <path d="M1050,270 L1050,378 L970,378 L970,438" stroke="#7c3aed" stroke-width="3.2" fill="none" stroke-dasharray="9 5" marker-end="url(#arr-purple)" stroke-linecap="round"/>
+  <!-- To GitHub -->
+  <path d="M1050,270 L1050,378 L1130,378 L1130,438" stroke="#7c3aed" stroke-width="3.2" fill="none" stroke-dasharray="9 5" marker-end="url(#arr-purple)" stroke-linecap="round"/>
+  <!-- To Jira -->
+  <path d="M1050,270 L1050,358 L1290,358 L1290,438" stroke="#7c3aed" stroke-width="3.2" fill="none" stroke-dasharray="9 5" marker-end="url(#arr-purple)" stroke-linecap="round"/>
+
+  <!-- Single MCP protocol badge in the middle of the right panel -->
+  <rect x="990" y="298" width="120" height="32" rx="16" fill="#fff" stroke="#7c3aed" stroke-width="2.2"/>
+  <text x="1050" y="320" text-anchor="middle" font-size="14" font-weight="800" fill="#7c3aed" letter-spacing="0.1em">MCP</text>
+
+  <!-- Bottom annotation -->
+  <text x="1050" y="625" text-anchor="middle" font-size="14" font-weight="700" fill="#7c3aed">Speak MCP once · plug into any tool</text>
+  <text x="1050" y="648" text-anchor="middle" font-size="12" fill="#64748b" font-style="italic">each tool ships an MCP server — your app never changes</text>
+</svg>

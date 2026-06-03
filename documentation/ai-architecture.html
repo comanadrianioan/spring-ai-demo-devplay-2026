@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Future of Software Architecture in the Age of AI</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+      --dark: #1e293b;
+      --muted: #64748b;
+      --light: #f1f5f9;
+      --border: #e2e8f0;
+    }
+
+    .reveal {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 38px;
+      color: var(--dark);
+    }
+
+    .reveal h1,
+    .reveal h2,
+    .reveal h3 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      color: var(--dark);
+      text-transform: none;
+      letter-spacing: -0.02em;
+    }
+
+    .reveal h1 {
+      font-size: 2.15em;
+      line-height: 1.15;
+      font-weight: 900;
+    }
+
+    .reveal h2 {
+      font-size: 1.55em;
+      margin-bottom: 0.45em;
+      font-weight: 800;
+    }
+
+    .reveal h3 {
+      font-size: 1em;
+      font-weight: 800;
+    }
+
+    .reveal h2 .accent,
+    .reveal h1 .accent,
+    .statement-title .accent {
+      font-weight: inherit;
+    }
+
+    .reveal .statement-title,
+    .reveal .demo-title,
+    .reveal .thank-title,
+    .speaker-card .bio h2 {
+      font-weight: 800;
+    }
+
+    .why-how .box h3 {
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .reveal .progress span {
+      background: var(--accent);
+    }
+
+    .reveal .slide-number {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .reveal section {
+      text-align: center;
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .small {
+      font-size: 0.62em;
+    }
+
+    .medium {
+      font-size: 0.82em;
+    }
+
+    .accent-line {
+      width: 72px;
+      height: 3px;
+      background: var(--accent);
+      margin: 18px auto;
+      border-radius: 2px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.55em;
+      font-weight: 600;
+      background: var(--light);
+      color: var(--dark);
+    }
+
+    .tag-accent {
+      background: var(--accent);
+      color: white;
+    }
+
+    .title-slide .title-byline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px 28px;
+      margin-top: 26px;
+      font-size: 1.05em;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--dark);
+    }
+
+    .title-slide .title-byline-sep {
+      width: 3px;
+      height: 1.15em;
+      background: var(--accent);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 24px auto;
+    }
+
+    .flow-node {
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 0.58em;
+      font-weight: 600;
+      background: white;
+      border: 2px solid var(--border);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .flow-node.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .flow-arrow {
+      font-size: 0.72em;
+      color: var(--muted);
+    }
+
+    .agent-steps {
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      margin: 32px auto;
+      flex-wrap: wrap;
+    }
+
+    .agent-step {
+      width: 240px;
+      min-height: 150px;
+      padding: 26px 18px;
+      border-radius: 14px;
+      background: white;
+      border: 2px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .agent-step .num {
+      font-size: 1.8em;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      text-align: center;
+    }
+
+    .agent-step .lbl {
+      font-size: 0.62em;
+      font-weight: 700;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    .harness-eq {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin: 36px auto 0;
+      font-weight: 800;
+      font-size: 1em;
+      flex-wrap: wrap;
+    }
+
+    .harness-eq .eq-term {
+      padding: 12px 26px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: white;
+      border: 2px solid var(--accent);
+      box-shadow: 0 2px 12px rgba(37, 99, 235, 0.2);
+    }
+
+    .harness-eq .eq-term.ghost {
+      background: var(--light);
+      color: var(--dark);
+      border-color: var(--border);
+      box-shadow: 0 1px 6px rgba(15, 23, 42, 0.04);
+    }
+
+    .harness-eq .eq-sign {
+      font-size: 1.2em;
+      font-weight: 900;
+      color: var(--muted);
+    }
+
+    .harness-eq .eq-sign.accent {
+      color: var(--accent);
+    }
+
+    .reveal p.harness-def {
+      font-size: 0.55em;
+      color: var(--muted);
+      max-width: 820px;
+      margin: 16px auto 0;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .why-how {
+      display: flex;
+      gap: 40px;
+      max-width: 900px;
+      margin: 28px auto;
+      text-align: left;
+    }
+
+    .why-how .box {
+      flex: 1;
+      padding: 28px;
+      border-radius: 14px;
+      background: var(--light);
+      border: 1px solid var(--border);
+    }
+
+    .why-how .box h3 {
+      font-size: 0.72em;
+      margin: 0 0 10px;
+    }
+
+    .why-how .box p {
+      font-size: 0.58em;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .benefit-chips {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .chip {
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-size: 0.56em;
+      font-weight: 600;
+      background: white;
+      border: 2px solid var(--accent-soft);
+      max-width: 260px;
+    }
+
+    .speaker-card {
+      display: flex;
+      align-items: center;
+      gap: 52px;
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .speaker-card img {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 5px solid var(--accent-soft);
+      flex-shrink: 0;
+    }
+
+    .speaker-card .bio h2 {
+      text-align: left;
+      margin: 0 0 12px;
+      font-size: 1.55em;
+      font-weight: 800;
+    }
+
+    .speaker-card .bio .role {
+      font-size: 0.68em;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .speaker-card .bio p {
+      font-size: 0.65em;
+      line-height: 1.65;
+      color: var(--muted);
+      margin: 8px 0;
+    }
+
+    .step-hint {
+      font-size: 0.5em;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+
+    .timeline {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: flex-end;
+      margin: 32px auto 0;
+      max-width: 700px;
+    }
+
+    .timeline .yr {
+      flex: 1;
+      font-size: 0.48em;
+      font-weight: 600;
+      color: var(--muted);
+      padding-top: 8px;
+      border-top: 3px solid var(--border);
+    }
+
+    .timeline .yr.hl {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .timeline .yr span {
+      display: block;
+      font-size: 1.1em;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+
+    /* ── Harness evolution timeline ── */
+    .harness-timeline-wrap {
+      position: relative;
+      margin: 38px auto 0;
+      max-width: 860px;
+      padding: 0 12px;
+    }
+
+    .harness-timeline-track {
+      position: relative;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      margin-top: 80px;
+      /* room for labels above */
+    }
+
+    .harness-timeline-track::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 90%;
+      /* filled to mid-2026 */
+      background: linear-gradient(90deg, #93c5fd 0%, var(--accent) 100%);
+      border-radius: 3px;
+    }
+
+    .harness-timeline-years {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .harness-yr {
+      font-size: 0.44em;
+      font-weight: 700;
+      color: var(--muted);
+      text-align: center;
+      min-width: 0;
+    }
+
+    .harness-yr.hl {
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    /*
+  Milestone wrapper: zero-width absolute anchor on the track.
+  Carries data-step-order so the animation transform stays here
+  and never conflicts with the children's own positioning transforms.
+*/
+    .harness-milestone {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      /* = 6px, the track height */
+      width: 0;
+      /* data-step-order animation will apply transform here */
+    }
+
+    /* dot: centred on the 6-px track */
+    .harness-dot {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 3px solid white;
+      box-shadow: 0 0 0 2px var(--accent);
+      z-index: 1;
+    }
+
+    /* label callout above the dot */
+    .harness-label {
+      position: absolute;
+      left: 0;
+      bottom: calc(100% + 14px);
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      font-size: 0.42em;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 8px;
+      white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+      line-height: 1.3;
+      text-align: center;
+    }
+
+    .harness-label::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--accent);
+    }
+
+    .diagram-wrap {
+      max-width: 100%;
+      margin: 0;
+      padding: 4px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--border);
+    }
+
+    .diagram-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 620px;
+      object-fit: contain;
+    }
+
+    .slide-diagram .diagram-wrap {
+      margin-top: 4px;
+    }
+
+    .bc-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 28px;
+      max-width: 920px;
+      margin: 20px auto;
+      align-items: stretch;
+    }
+
+    .bc-compare .col-h {
+      font-size: 0.58em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .bc-compare .col-h.ben {
+      color: var(--accent);
+      border-bottom-color: var(--accent-soft);
+    }
+
+    .bc-compare .col-h.ch {
+      color: #475569;
+      border-bottom-color: #cbd5e1;
+    }
+
+    [data-step-order] {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
+    }
+
+    [data-step-order].revealed {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .flow-arrow[data-after-step] {
+      opacity: 0;
+      visibility: hidden;
+      transform: none;
+      display: inline-block;
+      transition: opacity 0.35s ease, visibility 0.35s;
+    }
+
+    .flow-arrow[data-after-step].revealed {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* PDF / print mode: reveal all animated content so nothing is hidden in the exported PDF */
+    .reveal.print-pdf [data-step-order],
+    .reveal.print-pdf .flow-arrow[data-after-step],
+    body.print-pdf [data-step-order],
+    body.print-pdf .flow-arrow[data-after-step] {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: none !important;
+    }
+
+    .bc-card {
+      padding: 20px 24px 20px 22px;
+      border-radius: 12px;
+      font-size: 0.56em;
+      font-weight: 500;
+      line-height: 1.45;
+      text-align: left;
+      min-height: 3.2em;
+      color: var(--dark);
+      background: #fff;
+      border: 2px solid var(--border);
+      box-shadow: 0 1px 6px rgba(15, 23, 42, 0.04);
+    }
+
+    .bc-card.ben {
+      border-color: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+
+    .bc-card.ch {
+      background: var(--light);
+      border-color: #e2e8f0;
+      border-left: 4px solid #94a3b8;
+    }
+
+    .bc-hint {
+      font-size: 0.5em;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+
+    .statement-slide .statement-emoji {
+      font-size: 2.2em;
+      line-height: 1;
+      margin: 0 0 12px;
+      filter: grayscale(0.15);
+    }
+
+    .statement-slide .statement-title {
+      font-size: 2.35em;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+
+    .statement-slide .accent-line {
+      margin: 22px auto;
+    }
+
+    .demo-slide {
+      background: linear-gradient(160deg, #1e293b 0%, #0f172a 100%) !important;
+    }
+
+    .demo-slide .demo-emoji {
+      font-size: 2.4em;
+      margin: 0 0 8px;
+      line-height: 1;
+    }
+
+    .demo-slide .demo-title {
+      font-size: 3.2em;
+      font-weight: 900;
+      letter-spacing: 0.28em;
+      margin: 0;
+      padding-left: 0.28em;
+      color: #fff;
+      text-indent: 0;
+    }
+
+    .demo-slide .accent-line {
+      background: #93c5fd;
+      width: 96px;
+      margin: 28px auto 0;
+    }
+
+    .statement-slide.statement-ai .statement-title {
+      font-size: 2em;
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.25;
+    }
+
+    .thank-slide .thank-title {
+      font-size: 2.75em;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+
+    .thank-slide .thank-connect {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 8px 22px;
+      border-radius: 24px;
+      font-size: 0.52em;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 2px solid #bfdbfe;
+    }
+
+    .thank-grid {
+      display: flex;
+      gap: 72px;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+
+    .thank-person {
+      padding: 28px 32px 24px;
+      border-radius: 18px;
+      background: white;
+      border: 2px solid var(--border);
+      box-shadow: 0 8px 28px rgba(37, 99, 235, 0.08);
+      min-width: 240px;
+    }
+
+    .thank-person img.qr {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+      background: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    .thank-person .name {
+      font-size: 0.82em;
+      font-weight: 800;
+      margin-top: 16px;
+      color: var(--dark);
+    }
+
+    .thank-slide .accent-line {
+      margin: 24px auto 0;
+      width: 88px;
+    }
+
+    .reveal-speaker-notes-window .speaker-notes-text,
+    .reveal-speaker-notes-window .speaker-controls-notes .notes-inner,
+    .speaker-notes .notes-inner,
+    .notes-inner {
+      font-size: 1.65rem !important;
+      line-height: 1.55 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section class="title-slide">
+        <span class="tag tag-accent">DevPlay 2026</span>
+        <h1>The Future of Software<br>Architecture in the Age of AI</h1>
+        <div class="accent-line"></div>
+        <p class="title-byline">
+          <span><span class="accent">Razvan</span> Balasa</span>
+          <span class="title-byline-sep" aria-hidden="true"></span>
+          <span><span class="accent">Adrian</span> Coman</span>
+        </p>
+        <aside class="notes">
+          Welcome everyone. AI shows up in almost every product pitch and everyday conversation—we have seen something
+          like a five-hundred percent spike in search interest over the last couple of years alone. Today we want to
+          connect that hype to how we actually design software, especially as we move into the agent era.
+        </aside>
+      </section>
+
+      <section>
+        <h2>2026: <span class="accent">The Year of Agents</span></h2>
+        <div class="accent-line"></div>
+        <div class="timeline">
+          <div class="yr"><span>2023</span>Copilots everywhere</div>
+          <div class="yr"><span>2024</span>Tool use &amp; RAG in prod</div>
+          <div class="yr"><span>2025</span>Orchestration matures</div>
+          <div class="yr hl"><span>2026</span>Agents ship for real</div>
+        </div>
+        <aside class="notes">
+          It is fair to ask whether AI is here to stay or just another hype cycle. Instead of starting in the nineties,
+          look at the last three years. In twenty-twenty-three, copilots landed in every IDE. In twenty-twenty-four,
+          teams wired RAG and tools into real services. In twenty-twenty-five, orchestration patterns matured.
+          Twenty-twenty-six is when many of us stop experimenting and start shipping agents—with planning, decisions,
+          and actions inside our architectures. Models got smarter; systems got agentic.
+        </aside>
+      </section>
+
+      <section>
+        <div class="speaker-card">
+          <img src="presentation/assets/razvan.jpg" alt="Razvan Balasa">
+          <div class="bio">
+            <h2>Razvan Balasa</h2>
+            <p class="role">Java Technical Lead @ Playtika</p>
+          </div>
+        </div>
+        <aside class="notes">
+          I am Razvan. I have spent about eight years in software, mostly Java, from writing features through deployment
+          and infrastructure to architecture. I will walk you through a real-world scenario and how we evolved a
+          chatbot-style solution toward something more production-ready.
+        </aside>
+      </section>
+
+      <section>
+        <div class="speaker-card">
+          <img src="presentation/assets/adrian.jpg" alt="Adrian Coman">
+          <div class="bio">
+            <h2>Adrian Coman</h2>
+            <p class="role">Software Engineer @ Crowdstrike</p>
+          </div>
+        </div>
+        <aside class="notes">
+          I am Adrian. I have nine years of Java experience across several industries, with a focus on design and
+          architecture. I will cover what agents are, why our architectures need to change, and how RAG fits in before
+          we dive into the scenarios.
+        </aside>
+      </section>
+
+      <section data-step-slide="agents">
+        <h2>What are <span class="accent">AI agents</span>?</h2>
+        <div class="agent-steps">
+          <div class="agent-step" data-step-order="0">
+            <div class="num">1</div>
+            <div class="lbl">Plan</div>
+          </div>
+          <div class="agent-step" data-step-order="1">
+            <div class="num">2</div>
+            <div class="lbl">Decide</div>
+          </div>
+          <div class="agent-step" data-step-order="2">
+            <div class="num">3</div>
+            <div class="lbl">Act</div>
+          </div>
+        </div>
+
+        <aside class="notes">
+          In simple terms, an AI agent is a system that acts on its own to achieve a goal. Unlike a chatbot that only
+          answers once, an agent can plan tasks, make decisions, and take actions over time. Think of giving the AI a
+          mission—it figures out the steps and can adjust along the way. Instead of only asking what the weather is, you
+          might ask it to plan a weekend trip, suggest hotels, and remind you to pack—and it tries to carry that
+          through.
+        </aside>
+      </section>
+
+      <section data-step-slide="harness">
+        <h2>From prompts to a <span class="accent">harness</span></h2>
+
+        <div class="harness-timeline-wrap">
+          <div class="harness-timeline-track">
+            <!-- Prompt Engineering: ~85% of 2022→2023 = 17% of full span -->
+            <div class="harness-milestone" style="left:17%" data-step-order="0">
+              <div class="harness-label">Prompt<br>Engineering</div>
+              <div class="harness-dot"></div>
+            </div>
+
+            <!-- Context Engineering: midpoint 2023→2024 = 37.5% of full span -->
+            <div class="harness-milestone" style="left:37.5%" data-step-order="1">
+              <div class="harness-label">Context<br>Engineering</div>
+              <div class="harness-dot"></div>
+            </div>
+
+            <!-- Harness Engineering: start of 2026 = 80% of full span -->
+            <div class="harness-milestone" style="left:80%" data-step-order="2">
+              <div class="harness-label">Harness<br>Engineering</div>
+              <div class="harness-dot"></div>
+            </div>
+          </div>
+
+          <div class="harness-timeline-years">
+            <span class="harness-yr">2022</span>
+            <span class="harness-yr">2023</span>
+            <span class="harness-yr">2024</span>
+            <span class="harness-yr">2025</span>
+            <span class="harness-yr hl">2026</span>
+            <span class="harness-yr">2027</span>
+          </div>
+        </div>
+
+        <div class="harness-eq" data-step-order="3">
+          <span class="eq-term">Agent</span>
+          <span class="eq-sign">=</span>
+          <span class="eq-term ghost">Model</span>
+          <span class="eq-sign accent">+</span>
+          <span class="eq-term ghost">Harness</span>
+        </div>
+        <p class="harness-def" data-step-order="3">
+          The software wrapped around the model — managing its environment, context, and external tool access so it can
+          actually act.
+        </p>
+        <aside class="notes">
+          The AI engineering role has shifted three times in four years, and each shift moved the optimization target.
+
+          In twenty-twenty-two and twenty-twenty-three, the question was: how do I ask the model? That was prompt
+          engineering — roles, examples, reasoning patterns. A small prompt change could dramatically improve results,
+          so we optimized instructions.
+
+          By twenty-twenty-four, teams realized most failures came from missing context, not bad prompts. The question
+          became: what information should the model have? RAG, memory, conversation history, tool outputs — we optimized
+          information.
+
+          Now, in twenty-twenty-five and twenty-twenty-six, the model itself is just one component. The question is:
+          how do I organize the entire system around the model? Agent orchestration, tool calling, memory management,
+          evaluation loops. We optimize the execution environment.
+
+          As models improved, the bottleneck moved — from prompt quality, to context quality, to system design. That is
+          the harness. And an AI Agent is simply a Model plus a Harness. Watch for that pattern in every architecture
+          iteration we walk through — each one is really a more capable harness around the same LLM.
+        </aside>
+      </section>
+
+      <section data-step-slide="arch-ai">
+        <h2>Software architectures <span class="accent">with AI</span></h2>
+        <div class="why-how">
+          <div class="box" data-step-order="0">
+            <h3>Why</h3>
+            <p>More data than rules-only systems can handle.</p>
+          </div>
+          <div class="box" data-step-order="1">
+            <h3>How</h3>
+            <p>LLMs in the stack—intent in, useful output out.</p>
+          </div>
+        </div>
+        <aside class="notes">
+          Agents are getting smart enough for production, and expectations are rising. Why now? Because the amount of
+          data we process is huge—traditional software cannot keep up, while AI can learn and adapt. How do we use it?
+          By integrating large language models into our applications so they understand what users mean and help produce
+          clear, useful responses quickly.
+        </aside>
+      </section>
+
+      <section class="slide-diagram">
+        <h2><span class="accent">R</span>etrieval‑<span class="accent">A</span>ugmented <span
+            class="accent">G</span>eneration</h2>
+        <div class="diagram-wrap">
+          <img src="presentation/diagram-rag.svg" alt="">
+        </div>
+        <aside class="notes">
+          To face those challenges we often use RAG—retrieval augmented generation. RAG connects the LLM to a library of
+          knowledge. When someone asks a question, we search that library first, then feed the relevant facts to the
+          model together with the question. That way the answer is grounded in data you control. This diagram is the
+          prompt cycle: retrieve, augment the prompt, then generate—not sending the question to the model in isolation.
+        </aside>
+      </section>
+
+      <section data-step-slide="rag-benefits">
+        <h2>RAG <span class="accent">benefits</span></h2>
+        <div class="benefit-chips">
+          <div class="chip" data-step-order="0">More relevant, factual outputs</div>
+          <div class="chip" data-step-order="1">Update knowledge without full retraining</div>
+          <div class="chip" data-step-order="2">Lower cost when designed with guardrails</div>
+        </div>
+        <aside class="notes">
+          Grounding the model on real data cuts down hallucinations. You can refresh the knowledge base without
+          retraining the entire model. Done right, with proper guards against abuse, it can also be cheaper. Now that we
+          have the basics of LLMs and RAG, Razvan will take you through a real-world scenario we keep running into.
+        </aside>
+      </section>
+
+      <section class="slide-diagram">
+        <h2><span class="accent">MCP</span> — Model Context Protocol</h2>
+        <div class="diagram-wrap">
+          <img src="presentation/diagram-mcp-compare.svg" alt="">
+        </div>
+        <aside class="notes">
+          A quick aside before the architectures. Without MCP, every agent has to speak each platform's own API — Slack
+          one way, Drive another, Git a third — and you end up maintaining N times M custom connectors. With MCP, the
+          agent speaks one protocol; each tool ships an MCP server that does the translation. The blast radius of a new
+          tool drops from "build a custom integration" to "spin up an MCP server". Keep this in mind when we get to the
+          agentic orchestration diagram later — that is where MCP earns its keep.
+        </aside>
+      </section>
+
+      <section class="statement-slide">
+        <p class="statement-emoji">💬</p>
+        <h2 class="statement-title">Real-world <span class="accent">scenario</span></h2>
+        <div class="accent-line"></div>
+        <aside class="notes">
+          Picture this: you hear a Teams notification and already feel the context switch coming. In a feature channel,
+          someone asks how to configure rewards distribution—again. Either you are in flow on something new and do not
+          want to stop, or it has been so long that you would need to dig through wiki pages. You are a developer and an
+          AI enthusiast, so you wonder whether you can automate the answer—and you heard agents are the trend for
+          twenty-twenty-six.
+        </aside>
+      </section>
+
+      <section class="slide-diagram">
+        <h2>Naive solution</h2>
+        <div class="diagram-wrap">
+          <img src="presentation/diagram-naive.svg" alt="">
+        </div>
+        <aside class="notes">
+          So we sketch the simplest possible design. A chatbot registered to the Teams channel forwards the question
+          through a gateway into our Chatbot App. We have plenty of wiki pages from past work, so we fetch all that data
+          and serve it to the LLM alongside the question. This is an overly simplified example — in reality wiki data
+          would also go through a gateway and loading it into memory on every request is a bad idea — but bear with us.
+          We discover that we only need a good-enough prompt: all the wiki data plus the question from the channel, send
+          it to the LLM, and forward the response back to the chatbot. Quick prototype that works — for now.
+        </aside>
+      </section>
+
+      <section data-bc-slide="naive">
+        <h2><span class="accent">Benefits</span> <span class="muted">&amp;</span> challenges</h2>
+        <div class="bc-compare">
+          <div class="col-h ben">Benefits</div>
+          <div class="col-h ch">Challenges</div>
+          <div class="bc-card ben" data-step-order="0">Processing a large amount of data in one shot</div>
+          <div class="bc-card ch" data-step-order="1">Exceeding the LLM's maximum context window</div>
+          <div class="bc-card ben" data-step-order="2">Leveraging prompt engineering</div>
+          <div class="bc-card ch" data-step-order="3">Hallucinations — most of the wiki context is unrelated</div>
+          <div class="bc-card ben" data-step-order="4">Fast time to market</div>
+          <div class="bc-card ch" data-step-order="5">Cost of usage — every request is forwarded to the LLM</div>
+        </div>
+        <aside class="notes">
+          What we achieved: we process a lot of data at once, so the chatbot does not have to first locate the right
+          wiki page. But adding all that data risks exceeding the LLM's maximum context window. The simple solution
+          gives us a fast time to market — at the cost of forwarding every single question to the LLM, so the bill
+          explodes the moment two people start chatting in the channel. We use prompt engineering to keep answers
+          focused, yet with so much unrelated wiki content in the context we still see hallucinations and wrong answers.
+          Walk through each benefit and its matching challenge as you advance.
+        </aside>
+      </section>
+
+      <section class="slide-diagram">
+        <h2>RAG with <span class="accent">semantic caching</span></h2>
+        <div class="diagram-wrap">
+          <img src="presentation/diagram-rag-cache.svg" alt="">
+        </div>
+        <aside class="notes">
+          Back to the drawing board. We remember what Adrian said about RAG, and we decide to implement semantic
+          caching. We take all the wiki pages, run them through a document vectorization step — there are plenty of
+          third-party apps for this — and store the result in a vector database. Now when a question arrives, we do a
+          semantic similarity search to fetch only the chunks that match, use them as focused context for the LLM, and
+          return the response. Again, an oversimplification — in reality we would need triggers to keep the DB in sync
+          with wiki updates — but the architecture is much sharper than the naive version.
+        </aside>
+      </section>
+
+      <section data-bc-slide="rag-cache">
+        <h2><span class="accent">Benefits</span> <span class="muted">&amp;</span> challenges</h2>
+        <div class="bc-compare">
+          <div class="col-h ben">Benefits</div>
+          <div class="col-h ch">Challenges</div>
+          <div class="bc-card ben" data-step-order="0">Enhancing prompts with specific, focused context</div>
+          <div class="bc-card ch" data-step-order="1">Relying on a 3rd-party vectorization solution</div>
+          <div class="bc-card ben" data-step-order="2">Fast specific data retrieval from the vector DB</div>
+          <div class="bc-card ch" data-step-order="3">Additional data storage costs</div>
+          <div class="bc-card ben" data-step-order="4">Reduces the frequency of model retraining</div>
+          <div class="bc-card ch" data-step-order="5">More complex architecture</div>
+        </div>
+        <aside class="notes">
+          Let us see how we improved. We now enhance prompts with focused, question-specific data — but to create the
+          vectors we depend on a third-party solution that can be expensive or inaccurate. We retrieve only wiki data
+          related to the question, fast, thanks to the database — though we have introduced a new component: external
+          storage. By feeding only relevant data to the LLM, we lean less on its general knowledge and reduce
+          hallucinations — yet the architecture is more complex and the per-request LLM cost has not improved yet. So we
+          go back to the drawing board for one more iteration.
+        </aside>
+      </section>
+
+      <section class="slide-diagram">
+        <h2>RAG with semantic cache &amp; <span class="accent">chat history</span></h2>
+        <div class="diagram-wrap">
+          <img src="presentation/diagram-chat-history.svg" alt="">
+        </div>
+        <aside class="notes">
+          Now we layer chat history on top of the semantic search from the previous iteration. The goal is still to cut
+          LLM cost. When a question arrives, we first search a vector database of past question-and-answer pairs. If the
+          similarity is above our threshold, we return the cached answer and skip the LLM entirely. Only on a miss do we
+          fall back to the wiki RAG path: vector-search the wiki, build a rich prompt with the retrieved context, call
+          the LLM, then vectorize and store the new Q+A pair in chat history before responding. The Chatbot App in this
+          diagram orchestrates both the cache lookup and the retrieval path — we pay the LLM only when no past answer
+          fits.
+        </aside>
+      </section>
+
+      <section data-bc-slide="rag">
+        <h2><span class="accent">Benefits</span> <span class="muted">&</span> challenges</h2>
+        <div class="bc-compare">
+          <div class="col-h ben">Benefits</div>
+          <div class="col-h ch">Challenges</div>
+          <div class="bc-card ben" data-step-order="0">Reduced cost of LLM requests — our main goal</div>
+          <div class="bc-card ch" data-step-order="1">Must fine-tune the similarity threshold or return partial answers
+          </div>
+          <div class="bc-card ben" data-step-order="2">Faster responses when the cache hits — a DB search beats an LLM
+            round-trip</div>
+          <div class="bc-card ch" data-step-order="3">Outdated responses when wiki data changes — needs a sync mechanism
+          </div>
+          <div class="bc-card ben" data-step-order="4">Fault tolerance — history can answer when the LLM is unavailable
+          </div>
+          <div class="bc-card ch" data-step-order="5">Overall complexity increased again</div>
+        </div>
+        <aside class="notes">
+          We achieved what we set out to do: cut the cost of LLM calls and speed up responses, because the fastest
+          answer now comes straight from the database. We also bought ourselves a layer of fault tolerance — if the LLM
+          is down, the chat-history DB can still answer. The trade-offs: we have to fine-tune the similarity threshold
+          carefully to avoid partial answers; if the wiki changes in the meantime, cached responses go stale and we need
+          a sync mechanism to invalidate them; and the overall architecture is more complex again. Walk through each
+          benefit and its matching challenge as you advance.
+        </aside>
+      </section>
+
+      <section class="slide-diagram">
+        <h2><span class="accent">Agentic</span> orchestration</h2>
+        <div class="diagram-wrap">
+          <img src="presentation/diagram-orchestrator.svg" alt="">
+        </div>
+        <aside class="notes">
+          We moved from a POC-style pipeline toward something more production-shaped. The important distinction: there
+          is one orchestrator agent inside the Chatbot Orchestrator-it decides which tools to call and merges results.
+          RAG search, chat history lookup, and web search are tools, not separate agents. The agent routes the request,
+          invokes tools, builds the best prompt, calls the LLM when needed, and returns a confident answer.
+        </aside>
+      </section>
+
+      <section data-bc-slide="agentic">
+        <h2><span class="accent">Benefits</span> <span class="muted">&</span> challenges</h2>
+        <div class="bc-compare">
+          <div class="col-h ben">Benefits</div>
+          <div class="col-h ch">Challenges</div>
+          <div class="bc-card ben" data-step-order="0">Solves the partial / outdated answer problem of the previous
+            iteration</div>
+          <div class="bc-card ch" data-step-order="1">Longer response time — data travels through more components</div>
+          <div class="bc-card ben" data-step-order="2">Modular — extend or swap one tool without touching the rest</div>
+          <div class="bc-card ch" data-step-order="3">Needs sophisticated infrastructure for CD and high availability
+          </div>
+          <div class="bc-card ben" data-step-order="4">Extra fault tolerance — web search can fall back when other tools
+            cannot answer</div>
+          <div class="bc-card ch" data-step-order="5">Architecture has become even more complex</div>
+        </div>
+        <aside class="notes">
+          We successfully addressed the main drawback of the previous iteration — partial responses and outdated data —
+          by routing smarter and enriching context. The cost is response time: data has to travel through multiple
+          components. The big modularity win is that we can add or extend a single tool without redeploying or impacting
+          the rest of the system — but that demands an equally sophisticated infrastructure for continuous deployment
+          and high availability. We also picked up additional fault tolerance via the web search tool: when other tools
+          cannot answer, it kicks in. The trade-off is obvious from the diagram — the architecture is even more complex.
+        </aside>
+      </section>
+
+      <section class="demo-slide statement-slide">
+        <p class="demo-emoji">⚡</p>
+        <h2 class="demo-title">DEMO</h2>
+        <div class="accent-line"></div>
+        <aside class="notes">
+          Enough theory—we are on the Java stage. Spring AI recently hit general availability, and it is how we built
+          the demo you are about to see. In the chatai project we use Docker Compose for Ollama and Postgres, the chat
+          service wires vector advisors and chat memory, and tools expose wiki lookup plus a simulated web search for
+          board games. Run a quick live pass: ask about rewards distribution for a feature, then about Monopoly or Chess
+          rewards.
+        </aside>
+      </section>
+
+      <section class="statement-slide statement-ai">
+        <p class="statement-emoji">✨</p>
+        <h2 class="statement-title">This presentation was made with <span class="accent">AI</span></h2>
+        <div class="accent-line"></div>
+        <aside class="notes">
+          After seeing a real stack, we can answer the question from the start: yes, AI is here to stay. It will be
+          embedded in how we process large amounts of data and act on the results. And yes—even this deck was drafted
+          and refined with AI assistance, which is itself part of the story.
+        </aside>
+      </section>
+
+      <section class="thank-slide statement-slide">
+        <h2 class="thank-title">Thank you</h2>
+        <span class="thank-connect">LET'S CONNECT</span>
+        <div class="accent-line"></div>
+        <div class="thank-grid">
+          <div class="thank-person">
+            <img class="qr" src="presentation/assets/qr-razvan.png?v=3" alt="QR code Razvan Balasa" width="200"
+              height="200">
+            <div class="name">Razvan</div>
+          </div>
+          <div class="thank-person">
+            <img class="qr" src="presentation/assets/qr-adrian.png?v=3" alt="QR code Adrian Coman" width="200"
+              height="200">
+            <div class="name">Adrian</div>
+          </div>
+        </div>
+        <aside class="notes">
+          Thank you for your time. Scan the codes if you would like to connect with either of us. We are happy to take
+          questions on agents, RAG, orchestration, or the Spring AI demo.
+        </aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      width: 1280,
+      height: 720,
+      margin: 0.08,
+      transition: 'none',
+      transitionSpeed: 'fast',
+      plugins: [RevealNotes],
+      backgroundTransition: 'none',
+      center: true,
+      touch: true,
+      mouseWheel: true,
+      overview: true
+    }).then(function () {
+      var stepState = {};
+      var SHOW_ALL = /[?&]show-all\b/.test(window.location.search);
+      if (SHOW_ALL) {
+        document.body.classList.add('show-all');
+      }
+
+      function slideKey(slide) {
+        return slide.getAttribute('data-step-slide') || slide.getAttribute('data-bc-slide');
+      }
+
+      function resetStepSlide(slide) {
+        if (SHOW_ALL) {
+          slide.querySelectorAll('[data-step-order]').forEach(function (el) {
+            el.classList.add('revealed');
+          });
+          slide.querySelectorAll('.flow-arrow[data-after-step]').forEach(function (el) {
+            el.classList.add('revealed');
+          });
+          return;
+        }
+        var key = slideKey(slide);
+        if (!key) return;
+        stepState[key] = -1;
+        slide.querySelectorAll('[data-step-order]').forEach(function (el) {
+          el.classList.remove('revealed');
+        });
+        slide.querySelectorAll('.flow-arrow[data-after-step]').forEach(function (el) {
+          el.classList.remove('revealed');
+        });
+      }
+
+      function maxStepOnSlide(slide) {
+        var max = -1;
+        slide.querySelectorAll('[data-step-order]').forEach(function (el) {
+          max = Math.max(max, +el.getAttribute('data-step-order'));
+        });
+        return max;
+      }
+
+      function applyStepReveal(slide, maxStep) {
+        slide.querySelectorAll('[data-step-order]').forEach(function (el) {
+          el.classList.toggle('revealed', +el.getAttribute('data-step-order') <= maxStep);
+        });
+        slide.querySelectorAll('.flow-arrow[data-after-step]').forEach(function (el) {
+          el.classList.toggle('revealed', +el.getAttribute('data-after-step') < maxStep);
+        });
+      }
+
+      function advanceStepSlide(slide) {
+        var key = slideKey(slide);
+        if (!key) return false;
+        var max = maxStepOnSlide(slide);
+        var cur = stepState[key] !== undefined ? stepState[key] : -1;
+        if (cur >= max) return false;
+        cur++;
+        stepState[key] = cur;
+        applyStepReveal(slide, cur);
+        return true;
+      }
+
+      function regressStepSlide(slide) {
+        var key = slideKey(slide);
+        if (!key) return false;
+        var cur = stepState[key] !== undefined ? stepState[key] : -1;
+        if (cur < 0) return false;
+        cur--;
+        stepState[key] = cur;
+        applyStepReveal(slide, cur);
+        return true;
+      }
+
+      function showAllStepsOnSlide(slide) {
+        if (SHOW_ALL) return;
+        var key = slideKey(slide);
+        if (!key) return;
+        var max = maxStepOnSlide(slide);
+        stepState[key] = max;
+        applyStepReveal(slide, max);
+      }
+
+      function boostSpeakerNotes() {
+        document.querySelectorAll('.speaker-notes-text, .notes-inner, .reveal-speaker-notes-window .speaker-controls-notes').forEach(function (el) {
+          el.style.fontSize = '1.75rem';
+          el.style.lineHeight = '1.55';
+        });
+      }
+
+      Reveal.on('slidechanged', function (e) {
+        var prevIndices = e.previousSlide ? Reveal.getIndices(e.previousSlide) : null;
+        var navigatingBackward = prevIndices && (
+          prevIndices.h > e.indexh ||
+          (prevIndices.h === e.indexh && prevIndices.v > e.indexv)
+        );
+        if (navigatingBackward) {
+          showAllStepsOnSlide(e.currentSlide);
+        } else {
+          resetStepSlide(e.currentSlide);
+        }
+        if (e.previousSlide) resetStepSlide(e.previousSlide);
+        boostSpeakerNotes();
+      });
+      Reveal.on('ready', function () {
+        document.querySelectorAll('[data-step-slide],[data-bc-slide]').forEach(resetStepSlide);
+        boostSpeakerNotes();
+        setInterval(boostSpeakerNotes, 1000);
+      });
+      document.addEventListener('keydown', function (ev) {
+        var slide = Reveal.getCurrentSlide();
+        if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp' || ev.key === 'PageUp') {
+          if (regressStepSlide(slide)) {
+            ev.stopImmediatePropagation();
+            ev.preventDefault();
+          }
+          return;
+        }
+        if (ev.key !== 'ArrowRight' && ev.key !== 'ArrowDown' && ev.key !== ' ' && ev.key !== 'PageDown') return;
+        if (advanceStepSlide(slide)) {
+          ev.stopImmediatePropagation();
+          ev.preventDefault();
+        }
+      }, true);
+    });
+  </script>
+</body>
+
+</html>
