@@ -1,5 +1,4 @@
 .vscode/
 target/
 .rtk/
-docs/
 .env
