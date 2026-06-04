@@ -818,13 +818,7 @@
         </div>
 
         <aside class="notes">
-          Any ideas...? In simple words, An AI Agent is a system that can act on its own to achieve a goal.
-
-          Unlike a regular chatbot that just answers questions, an AI Agent can: - Plan tasks - Make decisions - Take actions and it can Work over time, not just respond once
-
-          Think of it like giving the AI a mission—and it figures out how to complete it, step by step, sometimes even adjusting along the way.
-
-          For example: Instead of just asking, "What's the weather?", you could tell an AI Agent:"Plan a weekend trip based on good weather, book a hotel, and remind me to pack."And it would try to do it all for you.
+          Any ideas...? In simple words, An AI Agent is a system that can act on its own to achieve a goal. Unlike a regular chatbot that just answers questions, an AI Agent can: - Plan tasks - Make decisions - Take actions. Think of it like giving the AI a mission—and it figures out how to complete it, step by step, sometimes even adjusting along the way. For example: Instead of just asking, "What's the weather?", you could tell an AI Agent:"Plan a weekend trip based on good weather, book a hotel, and remind me to pack." And it would try all that for you.
         </aside>
       </section>
 
@@ -874,17 +868,7 @@
           actually act.
         </p>
         <aside class="notes">
-          The last few years of AI come down to one shift: we went from writing prompts to building a harness. Let me walk you through how we got here.
-
-          It started with prompts. The idea was simple — ask better, get better. We tuned our words: roles, examples, instructions. For a while, that was the whole game.
-
-          Then we learned the words weren't enough. The model needed the right information in front of it. The focus moved to context — memory, history, documents, data. Feed it well, and it answers well.
-
-          But even a smart model with good context has one limit: it can only talk. It can't act, check its work, or fix its own mistakes. That's the wall we hit — and that's why we're here now, at Harness Engineering.
-
-          This is the key idea. An agent is not just a model. An agent is a model plus a harness. The model is the brain — it thinks. The harness is everything around it that lets it act: tools, memory, loops, permissions, checks, retries. Think of a car. The model is the engine; the harness is the rest of the vehicle — wheels, brakes, steering. A great engine on the ground goes nowhere. What gets you somewhere is the whole car working together.
-
-          So here's the takeaway. The best model alone won't win, models are starting to look alike anyway. The real difference now is the harness around them. The next wave of AI won't be about which model you pick. It'll be about how well you build the harness.
+          The last few years of AI come down to one shift: we went from writing prompts to building a harness. Let me walk you through how we got here. It started with prompts. The idea was simple — ask better, get better. We tuned our words: roles, examples, instructions. For a while, that was the whole game. Then we learned the words weren't enough. The model needed the right information in front of it. The focus moved to context — memory, history, documents, data. Feed it well, and it answers well. But even a smart model with good context has one limit: it can only talk. It can't act, check its work, or fix its own mistakes. That's the wall we hit — and that's why we're here now, at Harness Engineering. This is the key idea. An agent is not just a model. An agent is a model plus a harness. The model is the brain — it thinks. The harness is everything around it that lets it act: tools, memory, loops, permissions, checks, retries. Think of a car. The model is the engine; the harness is the rest of the vehicle — wheels, brakes, steering. A great engine on the ground goes nowhere. What gets you somewhere is the whole car working together. So here's the takeaway. The best model alone won't win, models are starting to look alike anyway. The real difference now is the harness around them. The next wave of AI won't be about which model you pick. It'll be about how well you build the harness around it.
         </aside>
       </section>
 
@@ -901,11 +885,7 @@
           </div>
         </div>
         <aside class="notes">
-          AI agents are getting smarter and more useful, and everyone expects they’ll soon be used in production.
-
-          WHY: One big reason for this shift is the huge amount of data we deal with today. Traditional software can’t keep up, but AI can learn and adapt, making it a much better tool for the job.
-
-          HOW: The key to making this work is adding LLMs into our software. LLMs can understand what you mean and help create clear, useful text quickly
+          AI agents are getting smarter and more useful, and everyone expects they’ll soon be used in production if not already. WHY: One big reason for this shift is the huge amount of data we deal with today. Traditional software can’t keep up, but AI can learn and adapt, making it a much better tool for the job. HOW: The key to making this work is adding LLMs into our software. LLMs can understand what you mean and help create clear, useful text quickly.
         </aside>
       </section>
 
@@ -995,13 +975,7 @@
           </svg>
         </div>
         <aside class="notes">
-          Imagine an AI companion inside a Mario game. A player can ask it anything in plain words. The catch: a raw LLM has never played your version of the game. Ask it "where's the hidden star in this level?" and it'll either shrug or confidently make one up. RAG fixes that by grounding the model in the game's own knowledge. Four steps.
-
-          Query — The player asks a real question: "How do I beat Bowser in the final castle?" Natural language, just like talking to a friend.
-
-          Augment — Now we build the real prompt. We take the player's question and attach those retrieved passages — Bowser's attack patterns, the bridge mechanic, the timing — straight into the context. The model isn't guessing from memory anymore; it has the game's actual content in hand.
-
-          Generate — The LLM writes the answer, grounded in that context: "Dodge his fire breath, grab his tail when he charges, spin to build momentum, and fling him into the bombs behind him — three times to win." Accurate, on-game, and updatable just by editing a doc — no retraining.
+          Imagine an AI companion inside a Mario game. A player can ask it anything in plain words. The catch: a raw LLM has never played your version of the game. Ask it "where's the hidden star in this level?" and it'll either halucinate or confidently make one up. RAG fixes that by grounding the model in the game's own knowledge. Four steps. Query — The player asks a real question: "How do I beat Bowser in the final castle?" Natural language, just like talking to a friend. Retrieve - We look up into an external data source for Mario tips, information about Bowser. Augment — Now we build the real prompt. We take the player's question and attach those retrieved passages — Bowser's attack patterns, the bridge mechanic, the timing — straight into the context. The model isn't guessing from memory anymore; it has the game's actual content in hand. Generate — The LLM writes the answer, grounded in that context: "Dodge his fire breath, grab his tail when he charges, spin to build momentum, and fling him into the bombs behind him — three times to win." Accurate, on-game, and updatable just by editing a doc — no retraining.
 
           The shift in one line: we stop asking the model "what do you know about Mario?" and start telling it "here's the relevant strategy — now answer the player." That's what turns an in-game AI from a liability into something you can trust.
         </aside>
@@ -1015,11 +989,7 @@
           <div class="chip" data-step-order="2">Lower cost when designed with guardrails</div>
         </div>
         <aside class="notes">
-          More relevant, factual outputs — Answers come from your data, not the model's guesswork. Fewer hallucinations.
-
-          Update knowledge without retraining — New info? Just edit a doc. The model stays the same.
-
-          Lower cost with guardrails — No expensive fine-tuning, and you control what it can say.
+          More relevant, factual outputs — Answers come from your data, not the model's guesswork. Fewer hallucinations. Update knowledge without retraining — New info? Just edit a doc. The model stays the same. Lower cost with guardrails — No expensive fine-tuning, and you control what it can say.
         </aside>
       </section>
 
@@ -1174,15 +1144,7 @@
           </svg>
         </div>
         <aside class="notes">
-          Quick show of hands — anyone here know MCP? What is it, or what's it used for?
-
-          MCP — the Model Context Protocol — is an open standard that lets an AI agent talk to external tools and data in one consistent way. Think of it like USB-C for AI: instead of a custom cable for every device, one connector fits them all. Let me show you why that matters.
-
-          Look at the left side: each tool sits behind its own API — Slack Web API, Drive REST, Git REST, Jira REST — and the agent has to speak every one of them. That's the N×M tangle: every new app times every new tool is another new connector to build and maintain.
-
-          On the right, MCP flips it. The agent speaks one protocol; each tool ships an MCP server that wraps its own REST API behind it. Adding a tool goes from "build a custom integration" to "plug in another server" — your app never changes.
-
-          Now that you you maste the basics, I’ll let Razvan to present you one real world scenario.
+          Quick show of hands — anyone here know MCP? What is it, or what's it used for? MCP — the Model Context Protocol — is an open standard that lets an AI agent talk to external tools and data in one consistent way. Think of it like USB-C for AI: instead of a custom cable for every device, one connector fits them all. Let me show you why that matters. Look at the left side: each tool sits behind its own API — Slack Web API, Drive REST, Git REST, Jira REST — and the agent has to speak every one of them. That's the N×M tangle: every new app times every new tool is another new connector to build and maintain. On the right, MCP flips it. The agent speaks one protocol; each tool ships an MCP server that wraps its own REST API behind it. Adding a tool goes from "build a custom integration" to "plug in another server" — your app never changes. Now that you master the basics, I’ll let Razvan to present you one real world scenario.
         </aside>
       </section>
 
