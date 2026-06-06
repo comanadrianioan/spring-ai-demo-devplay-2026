@@ -756,7 +756,7 @@
           <span><span class="accent">Adrian</span> Coman</span>
         </p>
         <aside class="notes">
-          Welcome everyone. AI shows up in almost every product pitch and everyday conversation—we have seen something like a five-hundred percent spike in search interest over the last couple of years alone. Today we want to connect that hype to how we actually design software, especially as we move into the agent era.
+          Every presentation has to be about AI these days, right? And fair enough — it's been the defining buzzword for the past three years, showing up everywhere from corporate decks to casual conversations with friends and colleagues. It moves so fast that even this presentation is struggling to keep up. A year ago, we were still asking whether AI was here to stay, tracing its evolution from the nineties to the present. But honestly, what happened in the last three years matters far more than everything that came before it. We all know the moment: late 2022, ChatGPT launched, and neither the world nor our industry has been the same since.
         </aside>
       </section>
 
@@ -770,7 +770,7 @@
           <div class="yr hl"><span>2026</span>Agents ship for real</div>
         </div>
         <aside class="notes">
-          It is fair to ask whether AI is here to stay or just another hype cycle. Instead of starting in the nineties, look at the last three years. In twenty-twenty-three, copilots landed in every IDE. In twenty-twenty-four, teams wired RAG and tools into real services. In twenty-twenty-five, orchestration patterns matured. Twenty-twenty-six is when many of us stop experimenting and start shipping agents—with planning, decisions, and actions inside our architectures. Models got smarter; systems got agentic.
+          But it didn't all happen overnight. In 2023, AI entered our IDEs — copilots started autocompleting code, one snippet at a time. In 2024, teams began wiring RAG pipelines to real services, giving models actual knowledge of the world they were operating in. By 2025, orchestration patterns had matured and AI was gaining real autonomy. And now, in 2026, we stop experimenting. Agents are making decisions. Agents are shipping. Models got smarter. Systems got agentic.
         </aside>
       </section>
 
@@ -783,7 +783,7 @@
           </div>
         </div>
         <aside class="notes">
-          I am Razvan. I have spent about eight years in software, mostly Java, from writing features through deployment and infrastructure to architecture. I will walk you through a real-world scenario and how we evolved a chatbot-style solution toward something more production-ready.
+          Hello everyone, my name is Razvan. I'm a Java Technical Lead at Playtika and a software engineer with eight years of experience — playing with pretty much every tool in the box, from writing features and crafting deployment pipelines, to shaping the infrastructure and architecture of the systems I work on.
         </aside>
       </section>
 
@@ -1153,7 +1153,7 @@
         <h2 class="statement-title">Real-world <span class="accent">scenario</span></h2>
         <div class="accent-line"></div>
         <aside class="notes">
-          Picture this: you hear a Teams notification and already feel the context switch coming. In a feature channel, someone asks how to configure rewards distribution—again. Either you are in flow on something new and do not want to stop, or it has been so long that you would need to dig through wiki pages. You are a developer and an AI enthusiast, so you wonder whether you can automate the answer—and you heard agents are the trend for twenty-twenty-six.
+          Picture a scenario most of us run into more often than we'd like. That Teams notification pops up, and you're already bracing yourself. Someone in your feature's channel is asking how to configure the rewards distribution — a question you've answered a dozen times before. But it never comes at a good time. Either you're deep in the flow of building something new and the last thing you need is a context switch, or enough time has passed that giving a proper answer would actually require digging back in yourself. You're a developer and an AI enthusiast, so naturally your mind goes straight to automation. And conveniently, you just heard from us that AI agent creation is exactly where things are heading.
         </aside>
       </section>
 
@@ -1163,7 +1163,7 @@
           <img src="presentation/diagram-naive.svg" alt="">
         </div>
         <aside class="notes">
-          So we sketch the simplest possible design. A chatbot registered to the Teams channel forwards the question through a gateway into our Chatbot App. We have plenty of wiki pages from past work, so we fetch all that data and serve it to the LLM alongside the question. This is an overly simplified example — in reality wiki data would also go through a gateway and loading it into memory on every request is a bad idea — but bear with us. We discover that we only need a good-enough prompt: all the wiki data plus the question from the channel, send it to the LLM, and forward the response back to the chatbot. Quick prototype that works — for now.
+          So you grab a pen and paper, or open a sketching app, and start designing the solution. You decide that a chatbot registered to that Teams channel will forward messages through a gateway straight into your Chatbot App. You've written plenty of wiki pages over the years, so you have enough data to answer most feature-related questions — you load that into memory to serve it to the model. Quick disclaimer — this is an oversimplified example. In reality, wiki data would also go through a gateway, and loading it into memory on every request isn't ideal. But bear with us. Once you realize you just need a solid prompt, you bundle the wiki data and the Teams question together into the context, send the request, and forward the LLM's response back to the chatbot.
         </aside>
       </section>
 
@@ -1180,7 +1180,7 @@
           <div class="bc-card ch" data-step-order="5">Hallucinations - most of the wiki context is unrelated</div>
         </div>
         <aside class="notes">
-          What we achieved: we process a lot of data at once, so the chatbot does not have to first locate the right wiki page. But adding all that data risks exceeding the LLM's maximum context window. The simple solution gives us a fast time to market — at the cost of forwarding every single question to the LLM, so the bill explodes the moment two people start chatting in the channel. We use prompt engineering to keep answers focused, yet with so much unrelated wiki content in the context we still see hallucinations and wrong answers. Walk through each benefit and its matching challenge as you advance.
+          Now let’s see what we have achieved so far. We managed to process a lot of data at once, so there is no need for us to search for that wiki page that answers the asked question. However, adding all this data might exceed the maximum context window of any available LLM. Creating this simple solution will guarantee us a fast time to market, but for each asked question, the request will be forwarded to the LLM. Naturally, the costs will explode if two people start chatting in our Teams channel. To have a focused answer, we’ll use our prompt engineering skills. Unfortunately, with this amount of data (all the wikis that are not necessarily related to our question), we’ll encounter a lot of hallucinations and wrong answers.
         </aside>
       </section>
 
@@ -1190,7 +1190,7 @@
           <img src="presentation/diagram-rag-cache.svg" alt="">
         </div>
         <aside class="notes">
-          Back to the drawing board. We remember what Adrian said about RAG, and we decide to implement semantic caching. We take all the wiki pages, run them through a document vectorization step — there are plenty of third-party apps for this — and store the result in a vector database. Now when a question arrives, we do a semantic similarity search to fetch only the chunks that match, use them as focused context for the LLM, and return the response. Again, an oversimplification — in reality we would need triggers to keep the DB in sync with wiki updates — but the architecture is much sharper than the naive version.
+          We go back to the drawing board and remember that we heard from Adi about RAG systems. To obtain a better context for the prompt, we decide to implement semantic caching. We take all the data from the wiki pages and run it through a document vectorization application (there are many third-party apps capable of performing this task) and then store the data in a vector database. Remember that this is an overly simplified example. If we would like to have the database in sync with each update or new wiki page, we would need some kind of triggers to reprocess the data, but this is a discussion for another time. Having the data in a vector database will allow us to take the question asked in the Teams channel and perform a database search, retrieving data based on semantic similarity. After this step, we’ll use the returned data alongside the asked question as context for the LLM and return the response to the Teams chatbot.
         </aside>
       </section>
 
@@ -1207,7 +1207,7 @@
           <div class="bc-card ch" data-step-order="5">More complex architecture</div>
         </div>
         <aside class="notes">
-          Let us see how we improved. We now enhance prompts with focused, question-specific data — but to create the vectors we depend on a third-party solution that can be expensive or inaccurate. We retrieve only wiki data related to the question, fast, thanks to the database — though we have introduced a new component: external storage. By feeding only relevant data to the LLM, we lean less on its general knowledge and reduce hallucinations — yet the architecture is more complex and the per-request LLM cost has not improved yet. So we go back to the drawing board for one more iteration.
+          Let’s see how we improved the system. We managed to inhance the promts with focused and specific data, but in order to create the database vectors we have to rely on 3rd party solutions which might be expensive or inaccurate depending on the solution. We managed to retrieved only wiki data that is related to the asked question in a short time due to database capabilities, but we introduced a new component in our system which is an external storage. By using only the data that is related with the asked question, we rely less on the model’s knowledge about the subject reducing the hallucinations that it might have, but we complicated the architecture of our system a bit and the costs haven’t improved yet. So what do we do? We know that we are good engineers and we gained some confidence to go back to the drawing board once again.
         </aside>
       </section>
 
@@ -1238,7 +1238,7 @@
           <div class="bc-card ch" data-step-order="5">Overall complexity increased again</div>
         </div>
         <aside class="notes">
-          We achieved what we set out to do: cut the cost of LLM calls and speed up responses, because the fastest answer now comes straight from the database. We also bought ourselves a layer of fault tolerance — if the LLM is down, the chat-history DB can still answer. The trade-offs: we have to fine-tune the similarity threshold carefully to avoid partial answers; if the wiki changes in the meantime, cached responses go stale and we need a sync mechanism to invalidate them; and the overall architecture is more complex again. Walk through each benefit and its matching challenge as you advance.
+          Now let’s see how far we got with our third iteration. We achieved what we proposed in the first place: reducing the cost of the LLM requests. However, we have to carefully fine-tune the acceptable threshold of the previously asked questions to avoid returning partial responses. We also managed to improve the response time, as the fastest response could come from a database search. However, we might face another issue now: outdated responses. If the wiki data has changed in the meantime, previous responses might not be accurate anymore, so we would need some synchronization mechanisms to ensure the validity of the history data. Lastly, we introduced an additional layer of fault tolerance. In case the LLM model is unable to respond, we can rely solely on the history data stored in the vectorized chat history database. But as we have already seen, we increased the overall complexity of the solution even more, and I’ll stop with this third iteration because the fourth one will probably require two slides just for the drawing.
         </aside>
       </section>
 
@@ -1248,7 +1248,7 @@
           <img src="presentation/diagram-orchestrator.svg" alt="">
         </div>
         <aside class="notes">
-          We moved from a POC-style pipeline toward something more production-shaped. The important distinction: there is one orchestrator agent inside the Chatbot Orchestrator-it decides which tools to call and merges results. RAG search, chat history lookup, and web search are tools, not separate agents. The agent routes the request, invokes tools, builds the best prompt, calls the LLM when needed, and returns a confident answer.
+          With this fourth iteration, we shift from a proof-of-concept approach to something that actually resembles production architecture. We wire up all our designated systems to an orchestration agent using the MCP communication pattern Adi walked us through — and now the agent is the one deciding which tool to call and what to do with the results. Need to search chat history? Check the knowledge base via RAG? Fall back to web search if nothing else cuts it? The agent figures that out on its own.
         </aside>
       </section>
 
@@ -1268,7 +1268,7 @@
           <div class="bc-card ch" data-step-order="5">Architecture has become even more complex</div>
         </div>
         <aside class="notes">
-          We successfully addressed the main drawback of the previous iteration — partial responses and outdated data — by routing smarter and enriching context. The cost is response time: data has to travel through multiple components. The big modularity win is that we can add or extend a single tool without redeploying or impacting the rest of the system — but that demands an equally sophisticated infrastructure for continuous deployment and high availability. We also picked up additional fault tolerance via the web search tool: when other tools cannot answer, it kicks in. The trade-off is obvious from the diagram — the architecture is even more complex.
+          We successfully addressed the main drawback of the previous iteration - partial responses and outdated data - by routing smarter and enriching context. The cost is response time: data has to travel through multiple components. The big modularity win is that we can add or extend a single tool without redeploying or impacting the rest of the system — but that demands an equally sophisticated infrastructure for continuous deployment and high availability. We also picked up additional fault tolerance via the web search tool: when other tools cannot answer, it kicks in. The trade-off is obvious from the diagram — the architecture is even more complex.
         </aside>
       </section>
 
@@ -1277,7 +1277,7 @@
         <h2 class="demo-title">DEMO</h2>
         <div class="accent-line"></div>
         <aside class="notes">
-          TBD
+          Alright, enough theory. The best way to make all of this click is through actual code, so I'll hand it over to Adi — who will walk us through how it all works in practice, in the language we all know and love: Java.
         </aside>
       </section>
 
@@ -1286,7 +1286,7 @@
         <h2 class="statement-title">This presentation was made with <span class="accent">AI</span></h2>
         <div class="accent-line"></div>
         <aside class="notes">
-          After seeing a real stack, we can answer the question from the start: yes, AI is here to stay. It will be embedded in how we process large amounts of data and act on the results. And yes—even this deck was drafted and refined with AI assistance, which is itself part of the story.
+          Now that we've seen a real-world AI agent in action, we can finally answer the question we started with. Yes — AI is here to stay. It's already becoming an integral part of how we build software, and that's only going to deepen as models get better at processing large amounts of data and acting on the results. And if you needed one last proof of that — this presentation was built with the help of AI.
         </aside>
       </section>
 
@@ -1307,7 +1307,7 @@
           </div>
         </div>
         <aside class="notes">
-          Thank you for your time. Scan the codes if you would like to connect with either of us. We are happy to take questions on agents, RAG, orchestration, or the Spring AI demo.
+          Thank you!
         </aside>
       </section>
 
