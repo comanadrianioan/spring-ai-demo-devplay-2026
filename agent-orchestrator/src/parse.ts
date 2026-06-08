@@ -37,10 +37,44 @@ function asBlocks(content: unknown): any[] {
   return Array.isArray(content) ? content : [];
 }
 
+/** Mutable accumulator of MCP tool calls, in first-seen order. */
+interface ToolAccumulator {
+  byId: Map<string, ToolCall>;
+  order: string[];
+}
+
+/** Record each MCP `tool_use` block from an assistant message. */
+function collectToolUses(content: unknown, acc: ToolAccumulator): void {
+  for (const block of asBlocks(content)) {
+    if (block?.type === "tool_use" && typeof block.name === "string" && block.name.startsWith("mcp__")) {
+      const { server, tool } = splitToolName(block.name);
+      acc.byId.set(block.id, { id: block.id, server, tool, input: block.input, resultSummary: "", isError: false });
+      acc.order.push(block.id);
+    }
+  }
+}
+
+/** Fill in result summary / error flag from a user message's `tool_result` blocks. */
+function applyToolResults(content: unknown, acc: ToolAccumulator): void {
+  for (const block of asBlocks(content)) {
+    if (block?.type !== "tool_result") continue;
+    const call = acc.byId.get(block.tool_use_id);
+    if (call) {
+      call.resultSummary = summarizeResult(block.content);
+      call.isError = block.is_error === true;
+    }
+  }
+}
+
+/** A `result` message carries either the final reply (success) or an error. */
+function readResult(m: any): { reply?: string; error?: string } {
+  if (m.subtype === "success") return { reply: m.result ?? "" };
+  return { error: (Array.isArray(m.errors) ? m.errors.join("; ") : "") || m.subtype || "error" };
+}
+
 /** Reduce a collected SDK message array into the turn's reply + MCP tool trace. */
 export function reduceMessages(messages: any[]): TurnResult {
-  const byId = new Map<string, ToolCall>();
-  const order: string[] = [];
+  const acc: ToolAccumulator = { byId: new Map(), order: [] };
   let reply = "";
   let sessionId: string | null = null;
   let error: string | null = null;
@@ -49,32 +83,15 @@ export function reduceMessages(messages: any[]): TurnResult {
     if (m?.session_id) sessionId = m.session_id;
 
     if (m?.type === "assistant") {
-      for (const block of asBlocks(m.message?.content)) {
-        if (block?.type === "tool_use" && typeof block.name === "string" && block.name.startsWith("mcp__")) {
-          const { server, tool } = splitToolName(block.name);
-          byId.set(block.id, { id: block.id, server, tool, input: block.input, resultSummary: "", isError: false });
-          order.push(block.id);
-        }
-      }
-    }
-
-    if (m?.type === "user") {
-      for (const block of asBlocks(m.message?.content)) {
-        if (block?.type === "tool_result") {
-          const call = byId.get(block.tool_use_id);
-          if (call) {
-            call.resultSummary = summarizeResult(block.content);
-            call.isError = block.is_error === true;
-          }
-        }
-      }
-    }
-
-    if (m?.type === "result") {
-      if (m.subtype === "success") reply = m.result ?? "";
-      else error = (Array.isArray(m.errors) ? m.errors.join("; ") : "") || m.subtype || "error";
+      collectToolUses(m.message?.content, acc);
+    } else if (m?.type === "user") {
+      applyToolResults(m.message?.content, acc);
+    } else if (m?.type === "result") {
+      const r = readResult(m);
+      if (r.reply !== undefined) reply = r.reply;
+      if (r.error !== undefined) error = r.error;
     }
   }
 
-  return { reply, tools: order.map((id) => byId.get(id)!), sessionId, error };
+  return { reply, tools: acc.order.map((id) => acc.byId.get(id)!), sessionId, error };
 }
