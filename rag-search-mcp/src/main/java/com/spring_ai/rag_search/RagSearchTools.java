@@ -22,9 +22,12 @@ public class RagSearchTools {
         this.objectMapper = objectMapper;
     }
 
-    @Tool(name = "searchWiki",
-          description = "Search the DevPlay knowledge base using semantic similarity. Returns relevant text chunks.")
-    public String searchWiki(String query) {
+    @Tool(name = "searchKnowledgeBase",
+          description = """
+                  Search the internal Dev.Play knowledge base (wiki) by meaning rather than exact keywords. \
+                  Returns the most relevant text passages, each with its source document and a similarity score. \
+                  Use this to answer Dev.Play questions from curated internal documentation.""")
+    public String searchKnowledgeBase(String query) {
         List<Document> results = vectorStore.similaritySearch(
             SearchRequest.builder().query(query).topK(5).build()
         );

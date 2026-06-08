@@ -6,8 +6,8 @@ Multi-module Spring AI MCP server demo for the Dev.Play 2026 conference. Four MC
 
 | Module | Port | Description |
 | --- | --- | --- |
-| `devplay-info-mcp` | 8080 | MCP: `DevPlayInformations`, `DevPlaySchedule` |
-| `rag-search-mcp` | 8081 | MCP: `searchWiki` (Chroma RAG) |
+| `devplay-info-mcp` | 8080 | MCP: `getDevPlayEventOverview`, `getDevPlaySchedule` |
+| `rag-search-mcp` | 8081 | MCP: `searchKnowledgeBase` (Chroma RAG) |
 | `chat-history-mcp` | 8082 | MCP: `searchChatHistory`, `recordChatHistory` |
 | `web-search-mcp` | 8083 | MCP: `searchWeb` (Tavily) |
 | `agent-orchestrator` | 3000 | Chat UI — Claude Agent SDK + MCP tool tracer |
@@ -75,6 +75,41 @@ For modules that need Chroma, start it independently first:
 ```bash
 docker compose up -d chroma
 ```
+
+## n8n integration
+
+The four MCP servers can be used as tools inside an n8n AI Agent node via the **MCP Client Tool** node (SSE transport).
+
+### Endpoints
+
+| n8n node name | Endpoint |
+| --- | --- |
+| DevPlay Schedule Info | `http://devplay-info-mcp:8080/sse` |
+| RAG Search | `http://rag-search-mcp:8081/sse` |
+| Chat History | `http://chat-history-mcp:8082/sse` |
+| Web Search | `http://web-search-mcp:8083/sse` |
+
+### Network bridge
+
+n8n and this stack run in separate Compose networks. Connect the MCP containers to n8n's network with short DNS aliases so the hostnames above resolve:
+
+```bash
+N8N_NETWORK=self-hosted-ai-starter-kit_demo   # adjust to your n8n network name
+
+docker network connect --alias devplay-info-mcp $N8N_NETWORK spring-ai-demo-devplay-2026-devplay-info-mcp-1
+docker network connect --alias rag-search-mcp  $N8N_NETWORK spring-ai-demo-devplay-2026-rag-search-mcp-1
+docker network connect --alias chat-history-mcp $N8N_NETWORK spring-ai-demo-devplay-2026-chat-history-mcp-1
+docker network connect --alias web-search-mcp  $N8N_NETWORK spring-ai-demo-devplay-2026-web-search-mcp-1
+```
+
+> These connections are ephemeral — re-run after a Docker restart. To make them permanent, add the n8n network to each service in `docker-compose.yml`:
+>
+> ```yaml
+> networks:
+>   default:
+>   self-hosted-ai-starter-kit_demo:
+>     external: true
+> ```
 
 ## Project layout
 

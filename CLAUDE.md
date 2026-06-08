@@ -8,8 +8,8 @@ Multi-module Maven monorepo of four Spring AI MCP servers for the Dev.Play 2026 
 
 | Module | Port | MCP tools |
 | --- | --- | --- |
-| `devplay-info-mcp` | 8080 | `DevPlayInformations`, `DevPlaySchedule` (static text) |
-| `rag-search-mcp` | 8081 | `searchWiki` (Chroma vector search) |
+| `devplay-info-mcp` | 8080 | `getDevPlayEventOverview`, `getDevPlaySchedule` (static text) |
+| `rag-search-mcp` | 8081 | `searchKnowledgeBase` (Chroma vector search) |
 | `chat-history-mcp` | 8082 | `searchChatHistory`, `recordChatHistory` (Chroma semantic cache) |
 | `web-search-mcp` | 8083 | `searchWeb` (Tavily REST API) |
 

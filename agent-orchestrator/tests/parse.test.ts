@@ -10,8 +10,8 @@ const happyPath = [
     message: {
       content: [
         { type: "text", text: "Let me check." },
-        { type: "tool_use", id: "t1", name: "mcp__devplay-info-mcp__DevPlaySchedule", input: {} },
-        { type: "tool_use", id: "t2", name: "mcp__rag-search-mcp__searchWiki", input: { query: "keynote" } },
+        { type: "tool_use", id: "t1", name: "mcp__devplay-info-mcp__getDevPlaySchedule", input: {} },
+        { type: "tool_use", id: "t2", name: "mcp__rag-search-mcp__searchKnowledgeBase", input: { query: "keynote" } },
       ],
     },
   },
@@ -36,8 +36,8 @@ describe("reduceMessages", () => {
   it("extracts MCP tool calls in order with server/tool labels", () => {
     const { tools } = reduceMessages(happyPath);
     expect(tools.map((t) => `${t.server}/${t.tool}`)).toEqual([
-      "devplay-info-mcp/DevPlaySchedule",
-      "rag-search-mcp/searchWiki",
+      "devplay-info-mcp/getDevPlaySchedule",
+      "rag-search-mcp/searchKnowledgeBase",
     ]);
     expect(tools[1].input).toEqual({ query: "keynote" });
     expect(tools[0].resultSummary).toBe("Day 1 09:00 — Keynote (Main Hall)");

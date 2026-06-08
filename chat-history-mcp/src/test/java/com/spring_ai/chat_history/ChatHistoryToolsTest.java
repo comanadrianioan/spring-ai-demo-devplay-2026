@@ -52,14 +52,14 @@ class ChatHistoryToolsTest {
     }
 
     @Test
-    void searchAppliesMinScore() {
+    void searchUsesDefaultThresholdAndTopK() {
         when(vectorStore.similaritySearch(any(SearchRequest.class))).thenReturn(List.of());
 
-        tools.searchChatHistory("DevPlay?", 3, 0.85);
+        tools.searchChatHistory("DevPlay?");
 
         ArgumentCaptor<SearchRequest> captor = ArgumentCaptor.forClass(SearchRequest.class);
         verify(vectorStore).similaritySearch(captor.capture());
-        assertThat(captor.getValue().getSimilarityThreshold()).isEqualTo(0.85);
+        assertThat(captor.getValue().getSimilarityThreshold()).isEqualTo(0.7);
         assertThat(captor.getValue().getTopK()).isEqualTo(3);
     }
 }

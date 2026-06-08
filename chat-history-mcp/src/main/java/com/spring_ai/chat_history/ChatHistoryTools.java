@@ -24,36 +24,39 @@ public class ChatHistoryTools {
         this.objectMapper = objectMapper;
     }
 
-    @Tool(name = "recordChatHistory",
-          description = "Store a question and its answer in the semantic cache for future reuse.")
+    @Tool(name = "recordChatHistory", description = """
+            Save a question and its final answer into the semantic cache so that identical or similar \
+            questions asked later can be answered instantly without redoing the work. \
+            Parameters: 'question' is the user's original query; 'answer' is the response you produced. \
+            Returns the ID of the stored record. Call this once, after you have a good answer.""")
     public String recordChatHistory(String question, String answer) {
         String id = UUID.randomUUID().toString();
         Document doc = new Document(id, question, Map.of(
-            "answer", answer,
-            "timestamp", Instant.now().toString()
-        ));
+                "answer", answer,
+                "timestamp", Instant.now().toString()));
         vectorStore.add(List.of(doc));
         return id;
     }
 
-    @Tool(name = "searchChatHistory",
-          description = "Search past Q&A pairs by semantic similarity to the question. Returns matches above minScore.")
-    public String searchChatHistory(String question, int topK, double minScore) {
+    @Tool(name = "searchChatHistory", description = """
+            Look in the semantic cache for previously answered questions that mean the same thing as the \
+            current one, so a cached answer can be reused instead of recomputed. \
+            Returns matching question/answer pairs with their timestamp and similarity score. \
+            Use this to reuse a previously given answer when the same or a similar question comes up again.""")
+    public String searchChatHistory(String question) {
         List<Document> results = vectorStore.similaritySearch(
-            SearchRequest.builder()
-                .query(question)
-                .topK(topK)
-                .similarityThreshold(minScore)
-                .build()
-        );
+                SearchRequest.builder()
+                        .query(question)
+                        .topK(3)
+                        .similarityThreshold(0.7)
+                        .build());
         List<Map<String, Object>> mapped = results.stream()
-            .map(d -> Map.of(
-                "question", d.getText(),
-                "answer", d.getMetadata().getOrDefault("answer", ""),
-                "timestamp", d.getMetadata().getOrDefault("timestamp", ""),
-                "score", d.getScore() != null ? d.getScore() : 0.0
-            ))
-            .toList();
+                .map(d -> Map.of(
+                        "question", d.getText(),
+                        "answer", d.getMetadata().getOrDefault("answer", ""),
+                        "timestamp", d.getMetadata().getOrDefault("timestamp", ""),
+                        "score", d.getScore() != null ? d.getScore() : 0.0))
+                .toList();
         try {
             return objectMapper.writeValueAsString(mapped);
         } catch (JsonProcessingException e) {

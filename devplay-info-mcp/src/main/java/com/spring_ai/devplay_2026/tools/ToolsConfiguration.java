@@ -5,8 +5,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ToolsConfiguration {
-    @Tool(name = "DevPlayInformations", description = "General information about DevPlay 2026 event")
-    public String getDevPlayInformations() {
+    @Tool(name = "getDevPlayEventOverview",
+          description = """
+                  Get a high-level overview of the Dev.Play 2026 game-development conference in Bucharest: \
+                  what the event is, its content tracks, networking and matchmaking, the indie festival and expo, \
+                  and the kinds of people who attend (studios, publishers, investors, speakers). \
+                  Returns a descriptive summary of the event. \
+                  Use this for general questions about what Dev.Play 2026 is and what it offers.""")
+    public String getDevPlayEventOverview() {
         return """
                     Dev.Play Conference 2026
                     Join us for an exciting two-day event in downtown Bucharest, featuring:

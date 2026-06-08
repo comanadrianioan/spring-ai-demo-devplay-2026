@@ -6,9 +6,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduleTools {
 
-    @Tool(name = "DevPlaySchedule",
-          description = "Full two-day schedule for Dev.Play 2026 (June 8–9, Bucharest). "
-                      + "Returns session times, titles, speakers, descriptions, and registration requirements.")
+    @Tool(name = "getDevPlaySchedule",
+          description = """
+                  Get the full two-day agenda for Dev.Play 2026 (June 8–9, Bucharest). \
+                  Returns every session with its time slot, title, stage (Main Stage or Workshop Stage), \
+                  speakers, a short description, and whether registration is required. \
+                  Use this for any question about when something happens, who is speaking, what talks or \
+                  workshops are on, or how to attend a specific session.""")
     public String getDevPlaySchedule() {
         return """
                 DEV.PLAY 2026 SCHEDULE

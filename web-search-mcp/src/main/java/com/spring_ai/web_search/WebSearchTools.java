@@ -14,7 +14,12 @@ public class WebSearchTools {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Tool(name = "searchWeb", description = "Search the web for current or unindexed information. Use when the knowledge base has no relevant results.")
+    @Tool(name = "searchWeb",
+          description = """
+                  Search the public internet for current, real-time, or niche information. \
+                  Parameters: 'query' is the search text; 'maxResults' caps how many results to return. \
+                  Returns a list of web results with titles, URLs, and content snippets. \
+                  Use this when you need up-to-date information from the open web.""")
     public String searchWeb(String query, int maxResults) {
         try {
             return objectMapper.writeValueAsString(tavilyClient.search(query, maxResults));
