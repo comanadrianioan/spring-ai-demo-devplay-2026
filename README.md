@@ -6,7 +6,7 @@ Multi-module Spring AI MCP server demo for the Dev.Play 2026 conference. Four MC
 
 | Module | Port | MCP tools |
 | --- | --- | --- |
-| `devplay-info-mcp` | 8080 | `DevPlayInformations` |
+| `devplay-info-mcp` | 8080 | `DevPlayInformations`, `DevPlaySchedule` |
 | `rag-search-mcp` | 8081 | `searchWiki` |
 | `chat-history-mcp` | 8082 | `searchChatHistory`, `recordChatHistory` |
 | `web-search-mcp` | 8083 | `searchWeb` (Tavily) |
@@ -68,5 +68,5 @@ spring-ai-demo-devplay-2026/
 ├── rag-search-mcp/         # port 8081
 ├── chat-history-mcp/       # port 8082
 ├── web-search-mcp/         # port 8083
-└── docs/plans/             # design + implementation notes
+└── docs/                   # conference slide deck + speaker notes
 ```

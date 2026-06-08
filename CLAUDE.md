@@ -8,7 +8,7 @@ Multi-module Maven monorepo of four Spring AI MCP servers for the Dev.Play 2026 
 
 | Module | Port | MCP tools |
 | --- | --- | --- |
-| `devplay-info-mcp` | 8080 | `DevPlayInformations` (static text) |
+| `devplay-info-mcp` | 8080 | `DevPlayInformations`, `DevPlaySchedule` (static text) |
 | `rag-search-mcp` | 8081 | `searchWiki` (Chroma vector search) |
 | `chat-history-mcp` | 8082 | `searchChatHistory`, `recordChatHistory` (Chroma semantic cache) |
 | `web-search-mcp` | 8083 | `searchWeb` (Tavily REST API) |
@@ -65,7 +65,7 @@ Use **Server Transport: Server Sent Events (Deprecated)**. The servers use Sprin
 
 ### MCP tool registration pattern
 
-Every server registers its tools the same way: a `@Configuration` class creates a `List<ToolCallback>` bean by calling `ToolCallbacks.from(toolsBean)`. Spring AI MCP autoconfiguration picks up that bean and exposes the tools over SSE. The `@Tool`-annotated methods on the tools bean define the tool name and description.
+Every server registers its tools the same way: a `@Configuration` class creates a `List<ToolCallback>` bean by calling `ToolCallbacks.from(toolsBean)`. Spring AI MCP autoconfiguration picks up that bean and exposes the tools over SSE. The `@Tool`-annotated methods on the tools bean define the tool name and description. A server with multiple tool beans aggregates them into one list — see `devplay-info-mcp`'s `McpConfiguration`, which combines `ToolsConfiguration` (`DevPlayInformations`) and `ScheduleTools` (`DevPlaySchedule`).
 
 ### RAG ingest (rag-search-mcp)
 
@@ -85,6 +85,20 @@ Both use OpenAI `text-embedding-3-small` via the `common` module's autoconfigura
 ### Testing approach
 
 Unit tests only (Mockito + AssertJ, no Testcontainers). External services (OpenAI, Tavily, Chroma) are mocked. Integration tests and end-to-end tests across servers are out of scope.
+
+## Conference presentation (`docs/`)
+
+`docs/index.html` is a self-contained slide deck (with `docs/presentation/` SVG diagrams and speaker photos) — the talk that accompanies this demo. Speaker notes are kept in `docs/speaker-notes.md` and synced to/from the HTML with `docs/notes_tool.py`:
+
+```bash
+# from docs/ — extract notes out of the HTML into the Markdown file
+python3 notes_tool.py extract index.html
+
+# edit speaker-notes.md, then write the notes back into the HTML
+python3 notes_tool.py apply index.html speaker-notes.md
+```
+
+Edit notes in `speaker-notes.md` and run `apply` rather than hand-editing the `<aside class="notes">` blocks in `index.html`.
 
 <!-- rtk-instructions v2 -->
 # RTK (Rust Token Killer) - Token-Optimized Commands
