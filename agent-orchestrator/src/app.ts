@@ -7,16 +7,26 @@ import { pingSse as defaultPingSse, authHint } from "./health";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 
+async function defaultClearChatHistory(): Promise<{ cleared: boolean }> {
+  const base = process.env.CHROMA_URL ?? "http://localhost:8000";
+  const url = `${base}/api/v2/tenants/default_tenant/databases/default_database/collections/chat_history`;
+  const resp = await fetch(url, { method: "DELETE" });
+  if (!resp.ok && resp.status !== 404) throw new Error(`Chroma ${resp.status}`);
+  return { cleared: true };
+}
+
 export interface AppDeps {
   runTurn?: typeof defaultRunTurn;
   serverDefs?: typeof defaultServerDefs;
   pingSse?: typeof defaultPingSse;
+  clearChatHistory?: () => Promise<{ cleared: boolean }>;
 }
 
 export function createApp(deps: AppDeps = {}): Express {
   const runTurn = deps.runTurn ?? defaultRunTurn;
   const serverDefs = deps.serverDefs ?? defaultServerDefs;
   const pingSse = deps.pingSse ?? defaultPingSse;
+  const clearChatHistory = deps.clearChatHistory ?? defaultClearChatHistory;
 
   const app = express();
   app.use(express.json());
@@ -52,6 +62,15 @@ export function createApp(deps: AppDeps = {}): Express {
   app.post("/api/reset", (_req, res) => {
     sessionId = null;
     res.json({ ok: true });
+  });
+
+  app.post("/api/clear-chat-history", async (_req, res) => {
+    try {
+      const result = await clearChatHistory();
+      res.json(result);
+    } catch (e) {
+      res.status(500).json({ error: String(e) });
+    }
   });
 
   app.get("/api/health", async (_req, res) => {

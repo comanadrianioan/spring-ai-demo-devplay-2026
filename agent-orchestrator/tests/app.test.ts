@@ -52,6 +52,32 @@ describe("POST /api/reset", () => {
   });
 });
 
+describe("POST /api/clear-chat-history", () => {
+  it("returns cleared:true when Chroma succeeds", async () => {
+    const app = createApp({
+      runTurn: vi.fn(),
+      serverDefs: () => [],
+      pingSse: async () => true,
+      clearChatHistory: async () => ({ cleared: true }),
+    });
+    const r = await request(app).post("/api/clear-chat-history");
+    expect(r.status).toBe(200);
+    expect(r.body).toEqual({ cleared: true });
+  });
+
+  it("returns 500 when Chroma call fails", async () => {
+    const app = createApp({
+      runTurn: vi.fn(),
+      serverDefs: () => [],
+      pingSse: async () => true,
+      clearChatHistory: async () => { throw new Error("Chroma 503"); },
+    });
+    const r = await request(app).post("/api/clear-chat-history");
+    expect(r.status).toBe(500);
+    expect(r.body.error).toMatch(/Chroma 503/);
+  });
+});
+
 describe("GET /api/health", () => {
   it("reports server reachability", async () => {
     const app = appWith(vi.fn());

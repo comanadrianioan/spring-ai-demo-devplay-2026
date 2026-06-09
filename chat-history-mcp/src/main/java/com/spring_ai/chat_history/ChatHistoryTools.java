@@ -47,7 +47,7 @@ public class ChatHistoryTools {
         List<Document> results = vectorStore.similaritySearch(
                 SearchRequest.builder()
                         .query(question)
-                        .topK(3)
+                        .topK(1)
                         .similarityThreshold(0.7)
                         .build());
         List<Map<String, Object>> mapped = results.stream()
